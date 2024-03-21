@@ -1,7 +1,7 @@
 ###############################################################################
 ## ARGUMENTS
 
-NAME= myprog
+NAME= pipex
 CFLAGS=  ##-Wall -Wextra -Werror -g3
 
 SRCS=$(addprefix $(SRC_DIR), $(SRC))
