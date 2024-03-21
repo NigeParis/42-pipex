@@ -14,9 +14,7 @@ It must take 4 arguments:
 It must behave exactly the same as the shell command below:
 $> < file1 cmd1 | cmd2 > file2
 
-Pipex
-
-Examples
+Pipex Examples
 $> ./pipex infile "ls -l" "wc -l" outfile
 
 Should behave like: < infile ls -l | wc -l > outfile
