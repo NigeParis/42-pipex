@@ -37,7 +37,7 @@ $(NAME): $(OBJ)
 
 $(OBJ):
 	@echo "\nCOMPILE all c files to .o FILES .......\n"
-	$(CC) $(CFLAGS) $(CCOPTIONS) $(SRCS) -I$(HEAD)
+	$(CC) $(CFLAGS) $(CCOPTIONS) $(SRCS) -I.$(HEAD)
 ##	$(CC) $(CFLAGS) $(CCOPTIONS) $(MAIN_SRC) -o $(MAIN_OBJ)
 
 clean:
