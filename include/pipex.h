@@ -22,4 +22,22 @@
 # include "../libft/libft.h"
 # include "../ft_printf/src/ft_printf.h"
 
+
+
+typedef struct s_pipex
+{
+    int     path_nb;
+    char    **paths;
+    char    *path_cmd;
+    char    *path;
+
+}   t_pipex;
+
+
+int ft_get_line_nb(char pathname[], char *env[]);
+char **ft_get_paths(char *paths);
+
+
+
+
 #endif
