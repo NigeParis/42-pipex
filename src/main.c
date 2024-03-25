@@ -30,7 +30,7 @@ int get_cmd(t_pipex *pipex, int argc, char *argv[], char *env[])
   }
 
   pipex->cmds = ft_split(tmp, ' ');
-  free (tmp);
+  free(tmp);
   return (0);
 }
 
@@ -50,17 +50,17 @@ int main(int argc, char *argv[], char *env[])
   ft_printf("'%s'\n", pipex.cmds[2]);
   ft_printf("'%s'\n", pipex.cmds[3]);
 
-  if (ft_path(&pipex, argv + 1, env) == 0)
-  {
-    ret = execve(pipex.path, argv + 1, env); 
+  ft_path(&pipex, &pipex.cmds[1], env);
+  
+    ft_printf("'%s'\n", pipex.path);
+    ret = execve(pipex.path, &pipex.cmds[1], env); 
 
-   while (pipex.paths && pipex.paths[i])
-   {
-     i++;
-   }
-  }
+  //  while (pipex.paths && pipex.paths[i])
+  //  {
+  //    i++;
+  //  }
+  
   ft_free_double_tab(pipex.paths);
-  ft_free_double_tab(pipex.cmds);
   ft_free_tab(pipex.path);
   ft_free_tab(pipex.path_cmd);
 
