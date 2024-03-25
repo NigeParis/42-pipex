@@ -17,7 +17,7 @@ SRC_DIR=
 OBJ_DIR=
 
 INCLUDE= -I./usr/include/
-SRC= ./src/main.c ./src/get_path.c
+SRC= ./src/main.c ./src/get_path.c ./src/errors.c
 
 LIBFT= ./libft/libft.a
 FT_PRINTF= ./ft_printf/libftprintf.a

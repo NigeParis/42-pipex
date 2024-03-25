@@ -62,3 +62,28 @@ char **ft_get_paths(char *paths)
   ft_free_tab(line);
   return (tab);
 }
+
+int ft_path(t_pipex *pipex, char **cmd, char **env)
+{
+  int i;
+  
+  i = 0;  
+  pipex->path_nb = ft_get_line_nb("PATH=", env);
+  //pipex->paths = NULL;
+  pipex->paths = ft_get_paths(env[pipex->path_nb]);
+  if (pipex->paths[i] == NULL)
+      return (ft_path_error(pipex));
+  pipex->path_cmd = ft_strjoin(pipex->paths[0], "/");
+  pipex->path = ft_strjoin(pipex->path_cmd, cmd[0]);
+  while (access(pipex->path, F_OK | R_OK) != 0)
+  {
+    ft_free_tab(pipex->path);
+    ft_free_tab(pipex->path_cmd);
+    i++;
+    pipex->path_cmd = ft_strjoin(pipex->paths[i], "/"); 
+    pipex->path = ft_strjoin(pipex->path_cmd, cmd[0]);
+    if (pipex->paths[i] == NULL)
+      return (ft_path_error(pipex));
+  }
+  return (0);
+}
