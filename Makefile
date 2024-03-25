@@ -21,7 +21,6 @@ SRC= ./src/main.c ./src/get_path.c ./src/errors.c
 
 LIBFT= ./libft/libft.a
 FT_PRINTF= ./ft_printf/libftprintf.a
-GET_NEXT_LINE= ./get_next_line/get_next_line.a
 
 HEADER=
 
@@ -34,8 +33,7 @@ $(NAME): $(OBJ)
 	@echo "Creating FILE .......\n"
 	@make -C ./libft/ all
 	@make -C ./ft_printf/ all
-	@make -C ./get_next_line/ all
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(FT_PRINTF) $(GET_NEXT_LINE)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(FT_PRINTF)
 
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.c
 	@echo "COMPILE all c files to .o FILES .......\n"
@@ -44,17 +42,14 @@ $(OBJ_DIR)/%.o:$(SRC_DIR)/%.c
 lib:
 	@make -C ./libft/ re 
 	@make -C ./ft_printf/ re
-	@make -C ./get_next_line/ re
 
 libclean:
 	@make -C ./libft/ clean
 	@make -C ./ft_printf/ clean
-	@make -C ./get_next_line/ clean
 
 libfclean:
 	@make -C ./libft/ fclean
 	@make -C ./ft_printf/ fclean
-	@make -C ./get_next_line/ fclean
 
 clean: libclean
 	@rm -f $(OBJ)

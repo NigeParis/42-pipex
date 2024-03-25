@@ -12,37 +12,55 @@
 
 #include "../include/pipex.h"
 
-  #include <sys/types.h>
-  #include <unistd.h>
-  #include <stdio.h>
+int get_cmd(t_pipex *pipex, int argc, char *argv[], char *env[])
+{
+  int   i;
+  char  *line;
+  char  *tmp;
 
+  i = 2;
+  tmp = ft_strdup(argv[1]);
+  while (i < argc)
+  {
+    line = ft_strjoin(tmp, " ");
+    free(tmp);
+    tmp = ft_strjoin(line, argv[i]);
+    free(line);
+    i++;
+  }
 
-
-  
+  pipex->cmds = ft_split(tmp, ' ');
+  free (tmp);
+  return (0);
+}
 
 
 int main(int argc, char *argv[], char *env[])
 {
   int ret;
   char *cmd[] = {"ls", "-l", (char *)0};
-
-
- int i;
- t_pipex pipex;
-
- i = 0;
+  int i;
+  t_pipex pipex;
   
+  i = 0;
+  
+  get_cmd(&pipex, argc, argv, env);
+  ft_printf("'%s'\n", pipex.cmds[0]);
+  ft_printf("'%s'\n", pipex.cmds[1]);
+  ft_printf("'%s'\n", pipex.cmds[2]);
+  ft_printf("'%s'\n", pipex.cmds[3]);
+
   if (ft_path(&pipex, argv + 1, env) == 0)
   {
     ret = execve(pipex.path, argv + 1, env); 
 
    while (pipex.paths && pipex.paths[i])
    {
-     ft_printf("\n - i = %d  - '%s'", i, pipex.paths[i]);
      i++;
    }
   }
   ft_free_double_tab(pipex.paths);
+  ft_free_double_tab(pipex.cmds);
   ft_free_tab(pipex.path);
   ft_free_tab(pipex.path_cmd);
 
@@ -52,7 +70,6 @@ int main(int argc, char *argv[], char *env[])
 
 
 /* ----------------------------------------------------------------------------------- */
-
 
 //child and parent process
 
@@ -70,6 +87,7 @@ int main(int argc, char *argv[], char *env[])
 //   }
 //   else if (process == 0)
 //     ft_putstr_fd("\nChild :", 1);
+// //  char *env[] = {"HOME = /home/nrobinso", "LOGNAME=nrobinso", (char *)0 };
 //   else
 //   {
 //     wait(NULL);
@@ -89,6 +107,7 @@ int main(int argc, char *argv[], char *env[])
 // }
 
 /* ----------------------------------------------------------------------------------- */
+
 //function execve() passes a cmd to shell and executes
 
 // use split with env to find the path to cmd bin:

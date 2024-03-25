@@ -22,14 +22,14 @@
 # include "../libft/libft.h"
 # include "../ft_printf/src/ft_printf.h"
 
-
-
 typedef struct s_pipex
 {
     int     path_nb;
     char    **paths;
     char    *path_cmd;
     char    *path;
+    char    *cmd_line;
+    char    **cmds;
 
 }   t_pipex;
 
