@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 09:25:41 by nrobinso          #+#    #+#             */
-/*   Updated: 2023/12/19 10:52:39 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/26 19:03:22 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@
 # endif
 
 char	*get_next_line(int fd);
-char	*ft_realloc(char *line, char *temp);
-char	*ft_getline(char *get_read);
-int		ft_linelen(char *line);
-
-
+char	*get_chars(int fd, char *buffer);
+char	*get_line_trim(char *buffer);
+char	*get_leftover(char *buffer);
 #endif
