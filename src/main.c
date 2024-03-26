@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/26 12:25:29 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/26 13:37:43 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@ int main(int argc, char *argv[], char *env[])
   int i;
   t_pipex pipex;
   int fd;
+  int pipe_fd[2];
   pid_t process;
   int intwait;
 
   i = 0;
+  pipe(pipe_fd);
   process = fork();
   if (process < 0)
     return (perror("fail"),1);
@@ -36,6 +38,8 @@ int main(int argc, char *argv[], char *env[])
     if (fd == -1)
      return (ft_putstr_fd("\nNo such file or directory", 1), -1);
     dup2(fd, 0);
+    dup2(pipe_fd[1], 1);
+    close(pipe_fd[0]);
     ret = execve(pipex.path, &pipex.cmds[0], env); 
   }
   else
@@ -48,6 +52,9 @@ int main(int argc, char *argv[], char *env[])
     if (fd == -1)
      return (ft_putstr_fd("\nNo such file or directory", 1), -1);
     dup2(fd, 1);
+    dup2(pipe_fd[0], 0);
+    close(pipe_fd[1]);
+
     ret = execve(pipex.path, &pipex.cmds[0], env); 
     
   }
