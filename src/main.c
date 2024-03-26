@@ -6,64 +6,53 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/25 12:29:44 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/26 12:25:29 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-int get_cmd(t_pipex *pipex, int argc, char *argv[], char *env[])
-{
-  int   i;
-  char  *line;
-  char  *tmp;
-
-  i = 2;
-  tmp = ft_strdup(argv[1]);
-  while (i < argc)
-  {
-    line = ft_strjoin(tmp, " ");
-    free(tmp);
-    tmp = ft_strjoin(line, argv[i]);
-    free(line);
-    i++;
-  }
-
-  pipex->cmds = ft_split(tmp, ' ');
-  free(tmp);
-  return (0);
-}
-
-
 int main(int argc, char *argv[], char *env[])
 {
   int ret;
-  char *cmd[] = {"ls", "-l", (char *)0};
   int i;
   t_pipex pipex;
-  
+  int fd;
+  pid_t process;
+  int intwait;
+
   i = 0;
-  
-  get_cmd(&pipex, argc, argv, env);
-  ft_printf("'%s'\n", pipex.cmds[0]);
-  ft_printf("'%s'\n", pipex.cmds[1]);
-  ft_printf("'%s'\n", pipex.cmds[2]);
-  ft_printf("'%s'\n", pipex.cmds[3]);
+  process = fork();
+  if (process < 0)
+    return (perror("fail"),1);
 
-  ft_path(&pipex, &pipex.cmds[1], env);
-  
-    ft_printf("'%s'\n", pipex.path);
-    ret = execve(pipex.path, &pipex.cmds[1], env); 
-
-  //  while (pipex.paths && pipex.paths[i])
-  //  {
-  //    i++;
-  //  }
-  
-  ft_free_double_tab(pipex.paths);
-  ft_free_tab(pipex.path);
-  ft_free_tab(pipex.path_cmd);
-
+  if (process == 0)
+  {
+    waitpid(process, &intwait, WUNTRACED );
+    get_cmd(&pipex, argc, argv[2], env);
+    ft_printf("\nChild - Process\n");
+    ft_path(&pipex, &pipex.cmds[0], env);
+    fd = open(argv[1], O_RDONLY);
+    if (fd == -1)
+     return (ft_putstr_fd("\nNo such file or directory", 1), -1);
+    dup2(fd, 0);
+    ret = execve(pipex.path, &pipex.cmds[0], env); 
+  }
+  else
+  {
+    waitpid(process, &intwait, WUNTRACED );
+    get_cmd(&pipex, argc, argv[3], env);
+    ft_printf("\nParent - Process\n");
+    ft_path(&pipex, &pipex.cmds[0], env);
+    fd = open(argv[4], O_WRONLY);
+    if (fd == -1)
+     return (ft_putstr_fd("\nNo such file or directory", 1), -1);
+    dup2(fd, 1);
+    ret = execve(pipex.path, &pipex.cmds[0], env); 
+    
+  }
+  WIFSIGNALED(intwait);
+  psignal(WTERMSIG(intwait), "\nExit signal");
   return (0);
 }
 
@@ -87,9 +76,6 @@ int main(int argc, char *argv[], char *env[])
 //   }
 //   else if (process == 0)
 //     ft_putstr_fd("\nChild :", 1);
-// //  char *env[] = {"HOME = /home/nrobinso", "LOGNAME=nrobinso", (char *)0 };
-//   else
-//   {
 //     wait(NULL);
 //     ft_putstr_fd("\nParent:", 1);
 //   }
