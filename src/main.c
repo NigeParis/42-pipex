@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/26 13:37:43 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/26 14:35:55 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int main(int argc, char *argv[], char *env[])
 
   if (process == 0)
   {
-    waitpid(process, &intwait, WUNTRACED );
+    waitpid(-1, &intwait, 0);
+    unlink(argv[4]);
     get_cmd(&pipex, argc, argv[2], env);
     ft_printf("\nChild - Process\n");
     ft_path(&pipex, &pipex.cmds[0], env);
@@ -44,11 +45,11 @@ int main(int argc, char *argv[], char *env[])
   }
   else
   {
-    waitpid(process, &intwait, WUNTRACED );
+    waitpid(-1, &intwait, 0 );
     get_cmd(&pipex, argc, argv[3], env);
     ft_printf("\nParent - Process\n");
     ft_path(&pipex, &pipex.cmds[0], env);
-    fd = open(argv[4], O_WRONLY);
+    fd = open(argv[4], O_WRONLY | O_CREAT);
     if (fd == -1)
      return (ft_putstr_fd("\nNo such file or directory", 1), -1);
     dup2(fd, 1);
@@ -58,8 +59,6 @@ int main(int argc, char *argv[], char *env[])
     ret = execve(pipex.path, &pipex.cmds[0], env); 
     
   }
-  WIFSIGNALED(intwait);
-  psignal(WTERMSIG(intwait), "\nExit signal");
   return (0);
 }
 

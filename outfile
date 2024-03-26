@@ -1,2 +1,14 @@
-1
-
+drwxrwxr-x 8 nrobinso nrobinso    4096 mars  26 18:48 .
+drwxr-xr-x 5 nrobinso nrobinso    4096 mars  23 22:22 ..
+-rw-r----T 1 nrobinso nrobinso     697 mars  26 15:51 cat -e
+drwxrwxr-x 3 nrobinso nrobinso    4096 mars  26 18:48 ft_printf
+drwxrwxr-x 8 nrobinso nrobinso    4096 mars  26 13:45 .git
+drwxrwxr-x 2 nrobinso nrobinso    4096 mars  26 13:17 include
+-rw-rw-r-- 1 nrobinso nrobinso      31 mars  26 13:44 infile
+drwxrwxr-x 2 nrobinso nrobinso    4096 mars  26 18:48 libft
+-rw-rw-r-- 1 nrobinso nrobinso    1354 mars  26 13:17 Makefile
+-rwxrwxr-x 1 nrobinso nrobinso   22904 mars  26 18:48 pipex
+drwxrwxr-x 2 nrobinso nrobinso    4096 mars  23 22:22 PIPEX notes on functions
+-rw-rw-r-- 1 nrobinso nrobinso 1586470 mars  23 22:22 pipex.pdf
+-rw-rw-r-- 1 nrobinso nrobinso    1152 mars  23 22:22 README.md
+drwxrwxr-x 2 nrobinso nrobinso    4096 mars  26 18:48 src
