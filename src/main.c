@@ -6,60 +6,76 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/26 14:35:55 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/26 21:18:57 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
+
+void  ft_cleanup(t_pipex *pipex)
+{
+    ft_free_double_tab(pipex->cmds);
+    ft_free_double_tab(pipex->paths);
+    ft_free_tab(pipex->path);
+    ft_free_tab(pipex->path_cmd);
+}
+
+
+int ft_child_process(t_pipex *pipex, int argc, char *argv[], char *env[])
+{ 
+    get_cmd(pipex, argc, argv[2], env);
+    ft_printf("\nChild - Process\n");
+    ft_path(pipex, &pipex->cmds[0], env);
+    pipex->fd = open(argv[1], O_RDONLY);
+    if (pipex->fd == -1)
+     return (ft_putstr_fd("\nNo such file or directory", 1), -1);
+    dup2(pipex->fd, 0);
+    dup2(pipex->pipe_fd[1], 1);
+    close(pipex->pipe_fd[0]);
+    exec_cmd(pipex, env);
+
+    return (0);
+}
+
+int ft_parent_process(t_pipex *pipex, int argc, char *argv[], char *env[])
+{
+  get_cmd(pipex, argc, argv[3], env);
+  ft_printf("\nParent - Process\n");
+  ft_path(pipex, &pipex->cmds[0], env);
+  pipex->fd = open(argv[4], O_WRONLY | O_RDONLY | O_CREAT);
+  if (pipex->fd == -1)
+    return (ft_putstr_fd("\nNo such file or directory", 1), -1);
+  dup2(pipex->fd, 1);
+  dup2(pipex->pipe_fd[0], 0);
+  close(pipex->pipe_fd[1]);
+  exec_cmd(pipex, env);
+  return (0);
+}
+
 int main(int argc, char *argv[], char *env[])
 {
-  int ret;
-  int i;
   t_pipex pipex;
-  int fd;
-  int pipe_fd[2];
   pid_t process;
   int intwait;
-
-  i = 0;
-  pipe(pipe_fd);
+  if (argc != 5)
+    return (ft_putstr_fd("<file \"cmd1\" \"cmd2\" file2>", 1), -1);
+  pipe(pipex.pipe_fd);
   process = fork();
   if (process < 0)
     return (perror("fail"),1);
-
   if (process == 0)
   {
-    waitpid(-1, &intwait, 0);
+    waitpid(process, &intwait, WUNTRACED );
     unlink(argv[4]);
-    get_cmd(&pipex, argc, argv[2], env);
-    ft_printf("\nChild - Process\n");
-    ft_path(&pipex, &pipex.cmds[0], env);
-    fd = open(argv[1], O_RDONLY);
-    if (fd == -1)
-     return (ft_putstr_fd("\nNo such file or directory", 1), -1);
-    dup2(fd, 0);
-    dup2(pipe_fd[1], 1);
-    close(pipe_fd[0]);
-    ret = execve(pipex.path, &pipex.cmds[0], env); 
+    ft_child_process(&pipex, argc, argv, env);
   }
   else
   {
-    waitpid(-1, &intwait, 0 );
-    get_cmd(&pipex, argc, argv[3], env);
-    ft_printf("\nParent - Process\n");
-    ft_path(&pipex, &pipex.cmds[0], env);
-    fd = open(argv[4], O_WRONLY | O_CREAT);
-    if (fd == -1)
-     return (ft_putstr_fd("\nNo such file or directory", 1), -1);
-    dup2(fd, 1);
-    dup2(pipe_fd[0], 0);
-    close(pipe_fd[1]);
-
-    ret = execve(pipex.path, &pipex.cmds[0], env); 
-    
+    waitpid(process, &intwait, WUNTRACED );
+    ft_parent_process(&pipex, argc, argv, env);  
   }
-  return (0);
+  return (ft_cleanup(&pipex), 0);
 }
 
 

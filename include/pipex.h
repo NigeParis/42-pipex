@@ -25,6 +25,8 @@
 typedef struct s_pipex
 {
     int     path_nb;
+    int     fd;
+    int     pipe_fd[2];
     char    **paths;
     char    *path_cmd;
     char    *path;
@@ -38,6 +40,7 @@ char **ft_get_paths(char *paths);
 int ft_path_error (t_pipex *pipex);
 int ft_path(t_pipex *pipex, char **cmd, char **env);
 int get_cmd(t_pipex *pipex, int argc, char *argv, char *env[]);
+void  exec_cmd(t_pipex *pipex, char *env[]);
 
 
 #endif
