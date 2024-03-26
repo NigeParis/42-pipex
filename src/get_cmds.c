@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 08:29:28 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/26 21:02:57 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/26 22:08:17 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ int get_cmd(t_pipex *pipex, int argc, char *argv, char *env[])
   pipex->cmds = ft_split(tmp, ' ');
   ft_printf("\n---------------------------%s----\n", tmp);
   free(tmp);
+
+  // make function Check cmds[0] pour /
+  
   return (0);
 }
 
