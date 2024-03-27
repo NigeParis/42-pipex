@@ -21,6 +21,7 @@
 # include <sys/types.h>
 # include "../libft/libft.h"
 # include "../ft_printf/src/ft_printf.h"
+# include "../get_next_line/get_next_line.h"
 
 typedef struct s_pipex
 {

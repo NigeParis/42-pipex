@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/25 11:52:01 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/27 09:45:50 by nrobinso         ###   ########.fr       */
+/*   Created: 2023/12/04 09:25:41 by nrobinso          #+#    #+#             */
+/*   Updated: 2024/03/27 08:24:34 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
-int ft_path_error (t_pipex *pipex)
-{
-    pipex->path = NULL;
-    return (ft_putstr_fd("\nError no such file or directory", 1),-1);
-}
-  
+# include <unistd.h>
+# include <stdlib.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 5
+# endif
+
+char	*get_next_line(int fd);
+size_t	ft_gnl_strlen(char *str);
+char	*ft_gnl_strjoin(char *s1, char *s2);
+char	*ft_gnl_strdup(char *s1);
+size_t	ft_gnl_strlcpy(char *dst, char *src, size_t dstsize);
+char	*ft_gnl_strchr(char *s, int c);
+
+#endif

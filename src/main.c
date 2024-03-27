@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/26 21:18:57 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/27 09:46:53 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int ft_parent_process(t_pipex *pipex, int argc, char *argv[], char *env[])
   get_cmd(pipex, argc, argv[3], env);
   ft_printf("\nParent - Process\n");
   ft_path(pipex, &pipex->cmds[0], env);
-  pipex->fd = open(argv[4], O_WRONLY | O_RDONLY | O_CREAT);
+  pipex->fd = open(argv[4], O_WRONLY | O_RDONLY | O_CREAT, 0777);
   if (pipex->fd == -1)
     return (ft_putstr_fd("\nNo such file or directory", 1), -1);
   dup2(pipex->fd, 1);

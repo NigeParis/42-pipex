@@ -6,11 +6,11 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 09:29:01 by nrobinso          #+#    #+#             */
-/*   Updated: 2023/12/19 11:54:49 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/27 08:28:21 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "get_next_line_bonus.h"
 
 char	*get_chars(int fd, char *buffer)
 {
@@ -21,7 +21,7 @@ char	*get_chars(int fd, char *buffer)
 	line = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!line)
 		return (NULL);
-	while (nbytes != 0 && !ft_strchr(buffer, '\n'))
+	while (nbytes != 0 && !ft_gnl_strchr(buffer, '\n'))
 	{
 		nbytes = read(fd, line, BUFFER_SIZE);
 		if (nbytes == -1)
@@ -29,7 +29,7 @@ char	*get_chars(int fd, char *buffer)
 			return (free(line), NULL);
 		}
 		line[nbytes] = 0;
-		buffer = ft_strjoin(buffer, line);
+		buffer = ft_gnl_strjoin(buffer, line);
 	}
 	free(line);
 	return (buffer);
@@ -47,7 +47,7 @@ char	*get_line_trim(char *buffer)
 		return (0);
 	while (buffer[len] && buffer[len] != '\n')
 		len++;
-	trimmed_read = malloc(ft_strlen(buffer) + 2 * sizeof(char));
+	trimmed_read = malloc(ft_gnl_strlen(buffer) + 2 * sizeof(char));
 	while (buffer[i] && buffer[i] != '\n')
 	{
 		trimmed_read[i] = buffer[i];
@@ -75,7 +75,7 @@ char	*get_leftover(char *buffer)
 		return (free(buffer), NULL);
 	if (buffer[i] == '\n')
 		i++;
-	new_buffer = malloc((ft_strlen(buffer) + 1) * sizeof(char));
+	new_buffer = malloc((ft_gnl_strlen(buffer) + 1) * sizeof(char));
 	if (!new_buffer)
 		return (NULL);
 	j = 0;

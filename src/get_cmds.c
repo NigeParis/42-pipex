@@ -6,13 +6,13 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 08:29:28 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/26 23:02:27 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/27 09:48:11 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-clean_cmd_path(t_pipex *pipex)
+void clean_cmd_path(t_pipex *pipex)
 {
   int flag;
   int i;
@@ -58,10 +58,10 @@ int get_cmd(t_pipex *pipex, int argc, char *argv, char *env[])
 
   // make function Check cmds[0] pour /
 
-  clean_cmd_path(pipex);
+  ft_printf("\n-----------------------------------%s", pipex->cmds[0]);
 
-  ft_printf("\n%s", pipex->cmds[0]);
-  
+  if ((access(pipex->cmds[0], F_OK | R_OK)) == 0)
+    clean_cmd_path(pipex);
   return (0);
 }
 
