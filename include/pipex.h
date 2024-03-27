@@ -40,7 +40,7 @@ int ft_get_line_nb(char pathname[], char *env[]);
 char **ft_get_paths(char *paths);
 int ft_path_error (t_pipex *pipex);
 int ft_path(t_pipex *pipex, char **cmd, char **env);
-int get_cmd(t_pipex *pipex, int argc, char *argv, char *env[]);
+int get_cmd(t_pipex *pipex, char *argv);
 void  exec_cmd(t_pipex *pipex, char *env[]);
 
 
