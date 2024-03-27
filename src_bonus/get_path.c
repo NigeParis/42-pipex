@@ -69,7 +69,6 @@ int ft_path(t_pipex *pipex, char **cmd, char **env)
   
   i = 0;  
   pipex->path_nb = ft_get_line_nb("PATH=", env);
-  //pipex->paths = NULL;
   pipex->paths = ft_get_paths(env[pipex->path_nb]);
   if (pipex->paths[i] == NULL)
       return (ft_path_error(pipex));
