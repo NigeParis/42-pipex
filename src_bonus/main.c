@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/27 23:58:30 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/28 20:31:44 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@ void  ft_cleanup(t_pipex *pipex)
     ft_free_double_tab(pipex->cmds);
     ft_free_double_tab(pipex->paths);
     ft_free_tab(pipex->path);
+//    ft_printf("\n------.....................................-- HERE ---------\n");
     ft_free_tab(pipex->path_cmd);
+    close(pipex->fd);
+    close(pipex->pipe_fd[0]);
+    close(pipex->pipe_fd[1]);
 }
 
 
@@ -43,7 +47,7 @@ int	ft_clean_endfile(t_pipex *pipex, int argc, char *argv[], int type)
 {
 	int	fd;
 
-	fd = open(argv[argc - 1], O_RDONLY);
+	fd = open(argv[argc - 1], O_RDONLY, 0777);
 	if (!fd || fd == -1)
 	{
 		ft_printf("Error\n%s making one\n", argv[argc]);
@@ -91,9 +95,16 @@ int  make_pipe(t_pipex *pipex, char *env[])
 int main(int argc, char *argv[], char *env[])
 {
   t_pipex pipex;
-  int   i;
+  pid_t   process;
+  int     intwait;
+  int     i;
   
   i = 2;
+   pipex.path = 0;  
+   pipex.paths = 0;
+   pipex.path_cmd = 0;
+   pipex.cmds = 0;
+  
   if (argc < 5)
     return (-1);
   ft_clean_endfile(&pipex, argc, argv, 0);
@@ -105,15 +116,23 @@ int main(int argc, char *argv[], char *env[])
   while (i < argc - 2)
   {
       get_cmd(&pipex, argv[i]);
-      ft_path(&pipex, &pipex.cmds[0], env);
+      ft_path(&pipex, pipex.cmds[0], env);
       make_pipe(&pipex, env);
+  
       i++;
   }
-  get_cmd(&pipex, argv[i]);
-  ft_path(&pipex, &pipex.cmds[0], env);
-  open_in_out_files(&pipex, argc, argv, 0);
-  dup2(pipex.fd, 1);
-  exec_cmd(&pipex, env);
-      
+  process = fork();
+
+  if (!process)
+  {
+    waitpid(process, &intwait, WUNTRACED);
+    get_cmd(&pipex, argv[i]);
+    ft_path(&pipex, pipex.cmds[0], env);
+    open_in_out_files(&pipex, argc, argv, 0);
+    dup2(pipex.fd, 1);
+    exec_cmd(&pipex, env);
+  }
+  else
+    ft_cleanup(&pipex);
   return (0);
 }

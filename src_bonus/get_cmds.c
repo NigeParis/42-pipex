@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 08:29:28 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/27 23:39:35 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/28 20:33:00 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,24 @@ int get_cmd(t_pipex *pipex, char *argv)
 {
   char  *tmp;
 
+  ft_free_double_tab(pipex->cmds);
   tmp = ft_strdup(argv);
   pipex->cmds = ft_split(tmp, ' ');
   free(tmp);
-  ft_printf("\n---get_cmd '%s'....\n", pipex->cmds[0]);
+  ft_printf("\n---..get_cmd '%s'....\n", pipex->cmds[0]);
 
   if ((access(pipex->cmds[0], F_OK | R_OK)) == 0)
+  {
     clean_cmd_path(pipex);
-  return (0);
+  }
+    return (0);
 }
 
 
 void  exec_cmd(t_pipex *pipex, char *env[])
 {
   int status;
+
 
   status = execve(pipex->path, &pipex->cmds[0], env); 
   if (status == -1)
