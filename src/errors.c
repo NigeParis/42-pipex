@@ -6,15 +6,14 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 11:52:01 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/27 09:45:50 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/28 22:35:07 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-int ft_path_error (t_pipex *pipex)
+int ft_path_error (void)
 {
-    pipex->path = NULL;
-    return (ft_putstr_fd("\nError no such file or directory", 1),-1);
+    return (ft_putstr_fd("Error\nNo such file or directory", 1),-1);
 }
   

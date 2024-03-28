@@ -23,7 +23,6 @@ int ft_get_line_nb(char pathname[], char *env[])
     return (-1);
   while (env && env[i])
   {
-    
     while (env[i][j] == pathname[j] && j < 6)      
     {
       j++;  
@@ -69,10 +68,9 @@ int ft_path(t_pipex *pipex, char **cmd, char **env)
   
   i = 0;  
   pipex->path_nb = ft_get_line_nb("PATH=", env);
-  //pipex->paths = NULL;
   pipex->paths = ft_get_paths(env[pipex->path_nb]);
   if (pipex->paths[i] == NULL)
-      return (ft_path_error(pipex));
+      return (ft_path_error());
   pipex->path_cmd = ft_strjoin(pipex->paths[0], "/");
   pipex->path = ft_strjoin(pipex->path_cmd, cmd[0]);
   while (access(pipex->path, F_OK | R_OK) != 0)
@@ -83,7 +81,11 @@ int ft_path(t_pipex *pipex, char **cmd, char **env)
     pipex->path_cmd = ft_strjoin(pipex->paths[i], "/"); 
     pipex->path = ft_strjoin(pipex->path_cmd, cmd[0]);
     if (pipex->paths[i] == NULL)
-      return (ft_path_error(pipex));
+    {
+      ft_path_error();
+      ft_cleanup(pipex);
+      exit (0);
+    }
   }
   return (0);
 }
