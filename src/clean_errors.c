@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 11:52:01 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/29 13:12:58 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/29 21:34:12 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	ft_clean_output_file(t_pipex *pipex, int argc, char *argv[], int type)
 	fd = open(argv[argc - 1], O_RDONLY, 0666);
 	if (!fd || fd == -1)
 	{
-	ft_printf("\n----------------------------------------HERE\n");
 		ft_printf("Error\nfile in not opened\n", argv[argc]);
 		close(fd);
 		open_in_out_files(pipex, argc, argv, type);

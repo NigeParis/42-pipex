@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/29 11:01:40 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/29 21:57:00 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 int	ft_child_process(t_pipex *pipex, char *argv[], char *env[])
 {
 	get_cmd(pipex, argv[2]);
-	ft_path(pipex, &pipex->cmds[0], env);
+	if (ft_path(pipex, &pipex->cmds[0], env) == -1)
+			return (-1);
+	
 	pipex->fd = open(argv[1], O_RDONLY);
 	if (pipex->fd == -1)
 		return (ft_putstr_fd("Error\nNo such file or directory", 1), -1);
@@ -28,10 +30,15 @@ int	ft_child_process(t_pipex *pipex, char *argv[], char *env[])
 
 int	ft_parent_process(t_pipex *pipex, char *argv[], char *env[], int process)
 {
+	process = fork();
+	if (process < 0)
+		return (perror("fail"), 1);
 	if (!process)
 	{
 		get_cmd(pipex, argv[3]);
-		ft_path(pipex, &pipex->cmds[0], env);
+		if (ft_path(pipex, &pipex->cmds[0], env) == -1)
+			return (-1);
+		ft_printf("\n----------------------get cmd-----------------HERE\n");
 		pipex->fd = open(argv[4], O_WRONLY | O_RDONLY | O_CREAT, 0666);
 		if (pipex->fd == -1)
 		{
@@ -42,7 +49,8 @@ int	ft_parent_process(t_pipex *pipex, char *argv[], char *env[], int process)
 		dup2(pipex->fd, 1);
 		dup2(pipex->pipe_fd[0], 0);
 		close(pipex->pipe_fd[1]);
-		exec_cmd(pipex, env);
+		if (!process)
+			exec_cmd(pipex, env);
 	}
 	return (0);
 }
@@ -69,7 +77,6 @@ int	main(int argc, char *argv[], char *env[])
 	else
 	{
 		waitpid(process, &intwait, WUNTRACED);
-		process = fork();
 		ft_parent_process(&pipex, argv, env, process);
 	}
 	ft_close_fd(&pipex, 3);
