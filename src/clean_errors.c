@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 11:52:01 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/29 11:06:18 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/29 13:12:58 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,16 @@ int	ft_clean_output_file(t_pipex *pipex, int argc, char *argv[], int type)
 {
 	int	fd;
 
-	if (argc != 5)
+	if (argc != 5 || (argv[2][0] == 0 || argv[3][0] == 0))
 	{
 		ft_putstr_fd("Error\nNbr of args <file \"cmd1\" \"cmd2\" file2>\n", 1);
-		exit(-1);
+		exit(1);
 	}
 	fd = open(argv[argc - 1], O_RDONLY, 0666);
 	if (!fd || fd == -1)
 	{
-		ft_printf("Error\n%s making one\n", argv[argc]);
+	ft_printf("\n----------------------------------------HERE\n");
+		ft_printf("Error\nfile in not opened\n", argv[argc]);
 		close(fd);
 		open_in_out_files(pipex, argc, argv, type);
 		ft_close_fd(pipex, 1);
@@ -39,7 +40,7 @@ int	ft_clean_output_file(t_pipex *pipex, int argc, char *argv[], int type)
 
 int	ft_path_error(void)
 {
-	ft_putstr_fd("Error\nNo such file or directory", 1);
+	ft_putstr_fd("\nError\nNo such file or dimmmmmmrectory", 1);	
 	return (1);
 }
 
@@ -59,7 +60,7 @@ int	open_in_out_files(t_pipex *pipex, int argc, char *argv[], int type)
 		if (pipex->fd == -1)
 		{
 			ft_close_fd(pipex, 1);
-			return (ft_putstr_fd("\nNo such file or directory\n", 1), 1);
+			return (ft_putstr_fd("\nNo such file or directory\n", 1), -1);
 		}
 	}
 	if (type == 0)

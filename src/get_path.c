@@ -83,8 +83,8 @@ int ft_path(t_pipex *pipex, char **cmd, char **env)
     if (pipex->paths[i] == NULL)
     {
       ft_path_error();
-      ft_cleanup(pipex);
-      exit (0);
+//      ft_cleanup(pipex);
+      return (-1);
     }
   }
   return (0);
