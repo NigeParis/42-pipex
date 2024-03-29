@@ -22,7 +22,7 @@ SRC_DIR=
 OBJ_DIR=
 
 INCLUDE= -I./usr/include/
-SRC= ./src/main.c ./src/get_path.c ./src/errors.c ./src/get_cmds.c
+SRC= ./src/main.c ./src/get_path.c ./src/clean_errors.c ./src/get_cmds.c
 BONUS_SRC= ./src_bonus/main.c ./src_bonus/get_path.c ./src_bonus/errors.c ./src_bonus/get_cmds.c
 
 LIBFT= ./libft/libft.a
