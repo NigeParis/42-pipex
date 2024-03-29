@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 11:52:01 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/29 21:34:12 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/29 22:35:15 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_clean_output_file(t_pipex *pipex, int argc, char *argv[], int type)
 
 int	ft_path_error(void)
 {
-	ft_putstr_fd("\nError\nNo such file or dimmmmmmrectory", 1);	
+	ft_putstr_fd("\nError\nNo such file or dimmmmmmrectory", 1);
 	return (1);
 }
 
@@ -88,5 +88,5 @@ void	ft_close_fd(t_pipex *pipex, int group)
 		close(pipex->fd);
 		close(pipex->pipe_fd[0]);
 		close(pipex->pipe_fd[1]);
-	}	
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/29 21:57:00 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/29 22:21:26 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ int	ft_child_process(t_pipex *pipex, char *argv[], char *env[])
 {
 	get_cmd(pipex, argv[2]);
 	if (ft_path(pipex, &pipex->cmds[0], env) == -1)
-			return (-1);
-	
+		return (-1);
 	pipex->fd = open(argv[1], O_RDONLY);
 	if (pipex->fd == -1)
 		return (ft_putstr_fd("Error\nNo such file or directory", 1), -1);

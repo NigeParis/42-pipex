@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 08:29:28 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/29 15:19:52 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/29 22:34:10 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	clean_cmd_path(t_pipex	*pipex)
 	while (pipex->cmds[0] && pipex->cmds[0][i])
 	{
 		if (pipex->cmds[0][i] == '/')
-		flag++;
+			flag++;
 		i++;
 	}
 	if (!flag)
