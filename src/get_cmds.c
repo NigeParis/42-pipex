@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 08:29:28 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/29 22:34:10 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/30 10:58:41 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	exec_cmd(t_pipex *pipex, char *env[])
 {
 	int	ret;
 
+	ft_close_fd(pipex, 1);
 	ret = execve(pipex->path, &pipex->cmds[0], env);
 	if (ret == -1)
 	{
