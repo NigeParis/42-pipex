@@ -47,6 +47,7 @@ char	**ft_get_paths(char *paths)
 	if (!paths)
 		return (NULL);
 	line = ft_strdup(paths);
+	//printf("\n\nline----->%s\n\n",line);
 	if (!line)
 		return (NULL);
 	while (paths && paths[i])
@@ -58,6 +59,7 @@ char	**ft_get_paths(char *paths)
 	line[j] = ':';
 	line[j + 1] = '\0';
 	tab = ft_split(line, ':');
+	//printf("\n\npath[0] = %s\n\n", tab[0]);
 	ft_free_tab(line);
 	return (tab);
 }
@@ -66,11 +68,14 @@ int	ft_path(t_pipex *pipex, char **cmd, char **env)
 {
 	int	i;
 
+
 	i = 0;
 	pipex->path_nb = ft_get_line_nb("PATH=", env);
 	pipex->paths = ft_get_paths(env[pipex->path_nb]);
 	if (pipex->paths[i] == NULL)
 		return (ft_path_error());
+
+
 	pipex->path_cmd = ft_strjoin(pipex->paths[0], "/");
 	pipex->path = ft_strjoin(pipex->path_cmd, cmd[0]);
 	while (access(pipex->path, F_OK | R_OK) != 0)
@@ -80,12 +85,15 @@ int	ft_path(t_pipex *pipex, char **cmd, char **env)
 		i++;
 		pipex->path_cmd = ft_strjoin(pipex->paths[i], "/");
 		pipex->path = ft_strjoin(pipex->path_cmd, cmd[0]);
+		//printf("\n\npipex->path -> %s\n\n", pipex->path);
 		if (pipex->paths[i] == NULL)
 		{
 			ft_path_error();
 			ft_cleanup(pipex);
 			return (-1);
 		}
+		
+
 	}
 	return (0);
 }

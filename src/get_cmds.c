@@ -6,13 +6,13 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 08:29:28 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/30 10:58:41 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/30 13:22:47 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-void	clean_cmd_path(t_pipex	*pipex)
+int	clean_cmd_path(t_pipex	*pipex)
 {
 	int	flag;
 	int	i;
@@ -28,7 +28,7 @@ void	clean_cmd_path(t_pipex	*pipex)
 		i++;
 	}
 	if (!flag)
-		return ;
+		return (-1);
 	while (pipex->cmds[0][i] != '/')
 		i--;
 	i++;
@@ -37,6 +37,7 @@ void	clean_cmd_path(t_pipex	*pipex)
 		pipex->cmds[0][j++] = pipex->cmds[0][i++];
 	}
 	pipex->cmds[0][j] = '\0';
+	return (0);
 }
 
 int	get_cmd(t_pipex *pipex, char *argv)
