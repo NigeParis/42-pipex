@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 11:52:01 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/30 08:10:23 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/30 15:36:01 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_clean_output_file(t_pipex *pipex, int argc, char *argv[], int type)
 
 int	ft_path_error(void)
 {
-	ft_putstr_fd("\nError\ncommand not found", 1);
+	ft_putstr_fd("\nError command not found", 1);
 	return (1);
 }
 

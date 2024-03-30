@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/30 16:39:36 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/30 16:32:54 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int  make_pipe(t_pipex *pipex, char *env[])
 {
   pid_t process;
 //   int   intwait;
-//int i = 0;
+int i = 0;
 
   pipe(pipex->pipe_fd);
   process = fork();
