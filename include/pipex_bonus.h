@@ -26,7 +26,8 @@
 typedef struct s_pipex
 {
     int     path_nb;
-    int     fd;
+    int     fd_in;
+    int     fd_out;
     int     pipe_fd[2];
     char    **paths;
     char    *path_cmd;
