@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                             :+:      :+:    :+:   */
+/*   pipex_bonus.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -26,8 +26,8 @@
 typedef struct s_pipex
 {
     int     path_nb;
-    int     fd_in;
-    int     fd_out;
+    int     fdin;
+    int     fdout;
     int     pipe_fd[2];
     char    **paths;
     char    *path_cmd;

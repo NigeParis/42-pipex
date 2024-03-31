@@ -11,6 +11,7 @@ OBJ=$(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 BONUS_SRCS=$(addprefix $(SRC_DIR), $(BONUS_SRC))
 BONUS_OBJ=$(BONUS_SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 
+HEAD_BONUS=$(addprefix $(INCLUDE), $(HEADER_BONUS))
 HEAD=$(addprefix $(INCLUDE), $(HEADER))
 
 CC=cc
@@ -22,14 +23,15 @@ SRC_DIR=
 OBJ_DIR=
 
 INCLUDE= -I./usr/include/
-SRC= ./src/main.c ./src/get_path.c ./src/clean_errors.c ./src/get_cmds.c
+SRC= ./src/main.c ./src/get_path.c ./src/errors.c ./src/get_cmds.c
 BONUS_SRC= ./src_bonus/main.c ./src_bonus/get_path.c ./src_bonus/errors.c ./src_bonus/get_cmds.c
 
 LIBFT= ./libft/libft.a
 FT_PRINTF= ./ft_printf/libftprintf.a
 GET_NEXT_LINE= ./get_next_line/get_next_line.a
 
-HEADER=
+HEADER=pipex.h
+HEADER_BONUS=pipex_bonus.h
 
 ###############################################################################
 ## RULES
@@ -58,7 +60,7 @@ $(BONUS): $(BONUS_OBJ)
 
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.c
 	@echo "COMPILE all c files to .o FILES .......\n"
-	@$(CC) $(CFLAGS) -c $(BONUS_SRCS) $(HEAD)
+	@$(CC) $(CFLAGS) -c $(BONUS_SRCS) $(HEAD_BONUS)
 
 lib:
 	@make -C ./libft/ re 

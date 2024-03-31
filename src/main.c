@@ -6,92 +6,139 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/31 09:20:49 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/31 12:45:49 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "../include/pipex_bonus.h"
 
-int	ft_child_process(t_pipex *pipex, char *argv[], char *env[])
+void	ft_cleanup(t_pipex *pipex)
 {
-	printf("\n--->start child\n\n");
-	int path_status;
-
-	get_cmd(pipex, argv[2]);
-	path_status = ft_path(pipex, &pipex->cmds[0], env);
-	if (path_status == 0)
-	{
-		pipex->fd = open(argv[1], O_RDONLY);
-		if (pipex->fd == -1)
-			return (ft_putstr_fd("Error\nNo such file or directory", 1), -1);
-	}
-	dup2(pipex->fd, 0);
-	dup2(pipex->pipe_fd[1], 1);
+	if (pipex->cmds)
+		ft_free_double_tab(pipex->cmds);
+	if (pipex->paths)
+		ft_free_double_tab(pipex->paths);
+	if (pipex->path)
+		ft_free_tab(pipex->path);
+	if (pipex->path_cmd)
+		ft_free_tab(pipex->path_cmd);
+//	close(pipex->fdin);
+//	close(pipex->fdout);
 	close(pipex->pipe_fd[0]);
-	if (path_status == 0)
-	{
-		printf("\n--->mid child with exec\n");
-		exec_cmd(pipex, env);
-	}
-	printf("\n--->END child without exec\n");
-	return (0);
+	close(pipex->pipe_fd[1]);
 }
 
-int	ft_parent_process(t_pipex *pipex, char *argv[], char *env[], int *process)
+int	open_in_out_files(t_pipex *pipex, int argc, char *argv[], int type)
 {
-	int path_status;
-	
-	path_status = 0;
-	if (*process < 0)
-		return (perror("fail"), 1);
-	
-	get_cmd(pipex, argv[3]);
-	path_status = ft_path(pipex, &pipex->cmds[0], env);	
-	if (path_status == 0)
+	if (type == 1)
 	{
-		pipex->fd = open(argv[4], O_WRONLY | O_RDONLY | O_CREAT, 0666);
-		if (pipex->fd == -1)
-			return (ft_putstr_fd("Error\nNo such file or directory", 1), -1);
-		dup2(pipex->fd, 1);
-		dup2(pipex->pipe_fd[0], 0);
-		close(pipex->pipe_fd[1]);
+		pipex->fdin = open(argv[1], O_RDONLY, 0666);
+		if (pipex->fdin == -1)
+		{
+			close(pipex->fdin);
+			return (ft_putstr_fd("\nNo such file or directory\n", 1), 1);
+		}
 	}
-	if (*process)
+	if (type == 0)
 	{
-		exec_cmd(pipex, env);
+		pipex->fdout = open(argv[argc -1], O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	}
 	return (0);
 }
 
-
-
-
-int	main(int argc, char *argv[], char *env[])
+int	ft_clean_endfile(t_pipex *pipex, int argc, char *argv[], int type)
 {
-	t_pipex	pipex;
-	pid_t	process;
-	int 	intwait;
-
-	ft_clean_output_file(&pipex, argc, argv, 0);
-	if (open_in_out_files(&pipex, argc, argv, 1) == -1)
-		return (ft_putstr_fd("\nCannot access 'file': No such file", 1), -1);
-	if (pipe(pipex.pipe_fd) == -1)
-		return (ft_close_fd(&pipex, 1), 1);
-	
-	process = fork();
-	if (process < 0)
-		return (perror("fail"), 1);
-	if (process == 0)
-	{
-		ft_child_process(&pipex, argv, env);
-	}
-	else
-	{
-		wait(NULL);
-		ft_parent_process(&pipex, argv, env, &process);
-	}
-	waitpid(process, &intwait, 0);
-	ft_close_fd(&pipex, 3);
-	process = fork();
+	open_in_out_files(pipex, argc, argv, type);
 	return (0);
+}
+
+int  make_pipe(t_pipex *pipex, char *env[], int i, int argc)
+{
+ 	pid_t process;
+	printf("\n---------------------------------------------%d - %d\n",i, argc);
+//   int   intwait;
+
+  pipe(pipex->pipe_fd);
+  process = fork();
+  if (!process)
+  {
+	// waitpid(process, &intwait, WUNTRACED);
+	
+// verifie  infile exisit [0]
+		// if not exits quitte
+	// dup infile
+	// if i = argv - 1 ->DUP  STDOUT 1
+		// IF NOT ARGV - 1 qUIT
+
+	if (i == argc -1)
+		dup2(pipex->fdout, 1);
+	if (i == 2)
+		dup2(pipex->fdin, 0);
+	// else
+	// 	exit (1);
+
+	close(pipex->pipe_fd[0]);
+	printf("\n----------------------------------> HERE\n");
+	dup2(pipex->pipe_fd[1],1);
+	
+	exec_cmd(pipex, env);  
+  }
+  else
+  {
+	// waitpid(process, &intwait, WUNTRACED);
+	
+	close(pipex->pipe_fd[1]);
+	dup2(pipex->pipe_fd[0],0);   
+  }
+
+  return (0);
+}
+
+int main(int argc, char *argv[], char *env[])
+{
+  t_pipex pipex;
+  pid_t   process;
+  int     intwait;
+  int     i;
+  
+  i = 2;
+   pipex.path = 0;  
+   pipex.paths = 0;
+   pipex.path_cmd = 0;
+   pipex.cmds = 0;
+  
+  if (argc < 5)
+	return (-1);
+  ft_clean_endfile(&pipex, argc, argv, 0);
+  if (open_in_out_files(&pipex, argc, argv, 1) == -1)
+	return (-1);
+// DANS ta structure tu cree 2 int infile et outfile
+// tu open ifile et tu open outfile. Si outfile don't exit tu le cree;
+// dup2(pipex.fdin, 0);
+//   pas besoin de dup dans le main du coup
+
+
+  while (i < argc - 2)
+  {
+	  get_cmd(&pipex, argv[i]);
+
+	  ft_path(&pipex, pipex.cmds[0], env);
+	  make_pipe(&pipex, env, i, argc);
+  
+	  i++;
+  }
+	process = fork();
+	waitpid(process, &intwait, WUNTRACED);
+
+  if (!process)
+  {
+	get_cmd(&pipex, argv[i]);
+	ft_path(&pipex, pipex.cmds[0], env);
+	open_in_out_files(&pipex, argc, argv, 0);
+	dup2(pipex.fdout, 1);
+	exec_cmd(&pipex, env);
+  }
+  else
+	ft_cleanup(&pipex);
+  return (0);
 }

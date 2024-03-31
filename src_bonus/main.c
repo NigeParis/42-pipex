@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/31 10:59:15 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/31 12:45:49 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	ft_cleanup(t_pipex *pipex)
 		ft_free_tab(pipex->path);
 	if (pipex->path_cmd)
 		ft_free_tab(pipex->path_cmd);
-	close(pipex->fd);
+//	close(pipex->fdin);
+//	close(pipex->fdout);
 	close(pipex->pipe_fd[0]);
 	close(pipex->pipe_fd[1]);
 }
@@ -31,16 +32,16 @@ int	open_in_out_files(t_pipex *pipex, int argc, char *argv[], int type)
 {
 	if (type == 1)
 	{
-		pipex->fd_in = open(argv[1], O_RDONLY, 0666);
-		if (pipex->fd_in == -1)
+		pipex->fdin = open(argv[1], O_RDONLY, 0666);
+		if (pipex->fdin == -1)
 		{
-			close(pipex->fd_in);
+			close(pipex->fdin);
 			return (ft_putstr_fd("\nNo such file or directory\n", 1), 1);
 		}
 	}
 	if (type == 0)
 	{
-		pipex->fd_out = open(argv[argc -1], O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		pipex->fdout = open(argv[argc -1], O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	}
 	return (0);
 }
@@ -53,9 +54,9 @@ int	ft_clean_endfile(t_pipex *pipex, int argc, char *argv[], int type)
 
 int  make_pipe(t_pipex *pipex, char *env[], int i, int argc)
 {
-  pid_t process;
+ 	pid_t process;
+	printf("\n---------------------------------------------%d - %d\n",i, argc);
 //   int   intwait;
-//int i = 0;
 
   pipe(pipex->pipe_fd);
   process = fork();
@@ -63,23 +64,29 @@ int  make_pipe(t_pipex *pipex, char *env[], int i, int argc)
   {
 	// waitpid(process, &intwait, WUNTRACED);
 	
-
 // verifie  infile exisit [0]
 		// if not exits quitte
 	// dup infile
 	// if i = argv - 1 ->DUP  STDOUT 1
 		// IF NOT ARGV - 1 qUIT
 
-	
+	if (i == argc -1)
+		dup2(pipex->fdout, 1);
+	if (i == 2)
+		dup2(pipex->fdin, 0);
+	// else
+	// 	exit (1);
 
 	close(pipex->pipe_fd[0]);
+	printf("\n----------------------------------> HERE\n");
 	dup2(pipex->pipe_fd[1],1);
+	
 	exec_cmd(pipex, env);  
   }
   else
   {
 	// waitpid(process, &intwait, WUNTRACED);
-
+	
 	close(pipex->pipe_fd[1]);
 	dup2(pipex->pipe_fd[0],0);   
   }
@@ -91,7 +98,7 @@ int main(int argc, char *argv[], char *env[])
 {
   t_pipex pipex;
   pid_t   process;
-//  int     intwait;
+  int     intwait;
   int     i;
   
   i = 2;
@@ -107,28 +114,28 @@ int main(int argc, char *argv[], char *env[])
 	return (-1);
 // DANS ta structure tu cree 2 int infile et outfile
 // tu open ifile et tu open outfile. Si outfile don't exit tu le cree;
-  dup2(pipex.fd, 0);
+// dup2(pipex.fdin, 0);
 //   pas besoin de dup dans le main du coup
 
 
   while (i < argc - 2)
   {
 	  get_cmd(&pipex, argv[i]);
+
 	  ft_path(&pipex, pipex.cmds[0], env);
 	  make_pipe(&pipex, env, i, argc);
   
 	  i++;
   }
-  wait(NULL);
-  process = fork();
+	process = fork();
+	waitpid(process, &intwait, WUNTRACED);
 
   if (!process)
   {
-//	waitpid(process, &intwait, WUNTRACED);
 	get_cmd(&pipex, argv[i]);
 	ft_path(&pipex, pipex.cmds[0], env);
 	open_in_out_files(&pipex, argc, argv, 0);
-	dup2(pipex.fd, 1);
+	dup2(pipex.fdout, 1);
 	exec_cmd(&pipex, env);
   }
   else
