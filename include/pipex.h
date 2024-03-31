@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:31:15 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/31 12:54:46 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/31 19:56:15 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_pipex
 int ft_get_line_nb(char pathname[], char *env[]);
 char **ft_get_paths(char *paths);
 int ft_path_error (t_pipex *pipex);
-int ft_path(t_pipex *pipex, char *cmd, char **env);
+int ft_path(t_pipex *pipex, char **cmd, char **env);
 int get_cmd(t_pipex *pipex, char *argv);
 void  exec_cmd(t_pipex *pipex, char *env[]);
 void    ft_cleanup(t_pipex *pipex);
