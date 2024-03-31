@@ -6,11 +6,11 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/31 12:45:49 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/31 13:08:45 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex_bonus.h"
+#include "../include/pipex.h"
 
 void	ft_cleanup(t_pipex *pipex)
 {
@@ -22,8 +22,8 @@ void	ft_cleanup(t_pipex *pipex)
 		ft_free_tab(pipex->path);
 	if (pipex->path_cmd)
 		ft_free_tab(pipex->path_cmd);
-//	close(pipex->fdin);
-//	close(pipex->fdout);
+	close(pipex->fdin);
+	close(pipex->fdout);
 	close(pipex->pipe_fd[0]);
 	close(pipex->pipe_fd[1]);
 }
@@ -32,7 +32,6 @@ int	open_in_out_files(t_pipex *pipex, int argc, char *argv[], int type)
 {
 	if (type == 1)
 	{
-		pipex->fdin = open(argv[1], O_RDONLY, 0666);
 		if (pipex->fdin == -1)
 		{
 			close(pipex->fdin);
