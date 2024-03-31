@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/30 16:39:36 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/31 09:51:16 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int main(int argc, char *argv[], char *env[])
 {
   t_pipex pipex;
   pid_t   process;
-  int     intwait;
+//  int     intwait;
   int     i;
   
   i = 2;
@@ -135,7 +135,7 @@ int main(int argc, char *argv[], char *env[])
 
   if (!process)
   {
-	waitpid(process, &intwait, WUNTRACED);
+//	waitpid(process, &intwait, WUNTRACED);
 	get_cmd(&pipex, argv[i]);
 	ft_path(&pipex, pipex.cmds[0], env);
 	open_in_out_files(&pipex, argc, argv, 0);

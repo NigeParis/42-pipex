@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 08:29:28 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/30 15:46:50 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/31 09:07:27 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	exec_cmd(t_pipex *pipex, char *env[])
 	ft_close_fd(pipex, 1);
 	if (!pipex->path)
 	{
+		
 		ft_putstr_fd("pas de chemin\n", 2);
 		exit(1);
 	}

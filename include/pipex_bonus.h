@@ -42,6 +42,7 @@ int ft_path_error (t_pipex *pipex);
 int ft_path(t_pipex *pipex, char *cmd, char **env);
 int get_cmd(t_pipex *pipex, char *argv);
 void  exec_cmd(t_pipex *pipex, char *env[]);
+void    ft_cleanup(t_pipex *pipex);
 
 
 #endif

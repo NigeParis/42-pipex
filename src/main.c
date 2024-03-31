@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/30 15:48:54 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/31 09:20:49 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,6 @@ int	main(int argc, char *argv[], char *env[])
 	}
 	waitpid(process, &intwait, 0);
 	ft_close_fd(&pipex, 3);
+	process = fork();
 	return (0);
 }
