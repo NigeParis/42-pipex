@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/01 22:17:50 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/01 23:31:16 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,13 @@ int main(int argc, char *argv[], char *env[])
   	{
 		
 		make_pipe(&pipex, env, argv, i);
-		ft_free_double_tab(pipex.cmds);
+
+//		ft_free_double_tab(pipex.cmds);
 	  	i++;
   	}
 	while (wait(NULL) > 0) ;
-	if (pipex.path && (pipex.all_cmd_valid == pipex.nbr_cmds))
-		free(pipex.path);
+
+	ft_cleanup(&pipex, 4);
+
 	return (0);
 }
