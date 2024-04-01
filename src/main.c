@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/01 19:03:54 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/01 22:08:58 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 
 
-int  make_pipe(t_pipex *pipex, char *env[], int i, int argc)
+int  make_pipe(t_pipex *pipex, char *env[], char *argv[], int i, int argc)
 {
  	pid_t process;
 
@@ -33,7 +33,7 @@ int  make_pipe(t_pipex *pipex, char *env[], int i, int argc)
 			
 		}
 		close(pipex->pipe_fd[1]);
-		exec_cmd(pipex, env);
+		exec_cmd(pipex, i, argv, env);
  	}
   	else
   	{
@@ -66,11 +66,8 @@ int main(int argc, char *argv[], char *env[])
 	pipex.fdout = open(argv[argc -1], O_WRONLY | O_CREAT | O_TRUNC, 0777);
   	while (i <= argc - 2)
   	{
-		get_cmd(&pipex, argv[i]);
-		print_double_tab(pipex.cmds);
-		printf("Nbr cmds %d\n", pipex.nbr_cmds);
-	  	ft_path(&pipex, pipex.cmds[0], env);
-		make_pipe(&pipex, env, i, argc);
+		
+		make_pipe(&pipex, env, argv, i, argc);
 		ft_free_double_tab(pipex.cmds);
 	  	i++;
   	}
