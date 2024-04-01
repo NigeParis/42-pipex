@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 08:29:28 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/31 22:15:43 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/01 16:42:04 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,7 @@ int	clean_cmd_path(t_pipex	*pipex)
 
 int	get_cmd(t_pipex *pipex, char *argv)
 {
-	char	*tmp;
-
-	tmp = ft_strdup(argv);
-	pipex->cmds = ft_split(tmp, ' ');
-	free(tmp);
+	pipex->cmds = ft_split(argv, ' ');
 	if ((access(pipex->cmds[0], F_OK | R_OK)) == 0)
 		clean_cmd_path(pipex);
 	return (0);
@@ -56,14 +52,12 @@ void	exec_cmd(t_pipex *pipex, char *env[])
 {
 	int	ret;
 
-//	ft_close_fd(pipex, 1);
 	if (pipex->path == 0)
 	{
-		
 		ft_putstr_fd("pipex : cnd not found\n", 2);
 		exit(1);
 	}
-	ret = execve(pipex->path, &pipex->cmds[0], env);
+	ret = execve(pipex->path, pipex->cmds, env);
 	if (ret == -1)
 	{
 		ft_putstr_fd("pipe : command not found\n", 2);

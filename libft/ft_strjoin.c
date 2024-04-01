@@ -6,11 +6,11 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 08:28:03 by nrobinso          #+#    #+#             */
-/*   Updated: 2023/11/22 18:03:58 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/01 12:50:23 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-/**
-* ft_strjoin  -  char *ft_strjoin(char const *s1, char const *s2);
+
+/* ft_strjoin  -  char *ft_strjoin(char const *s1, char const *s2);
 *
 * Description
 * Allocates (with malloc(3)) and returns a new string, which is the result 
