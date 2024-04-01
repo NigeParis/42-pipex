@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 08:29:28 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/01 16:42:04 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/01 19:01:13 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,22 @@ void	exec_cmd(t_pipex *pipex, char *env[])
 	if (ret == -1)
 	{
 		ft_putstr_fd("pipe : command not found\n", 2);
-		ft_cleanup(pipex);
-		exit (1);
+		
+//		ft_cleanup(pipex, 1);
+		exit(127);
 	}
+}
+
+
+void	print_double_tab(char *tab[])
+{
+	int i;
+
+	i = 0;
+
+	while (tab && tab[i])
+	{
+		printf("%s\n", tab[i]);
+		i++;
+	}	
 }

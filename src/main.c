@@ -6,48 +6,13 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/01 17:05:49 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/01 19:03:54 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-void	ft_cleanup(t_pipex *pipex)
-{
-	if (pipex->cmds)
-		ft_free_double_tab(pipex->cmds);
-	if (pipex->paths)
-		ft_free_double_tab(pipex->paths);
-	if (pipex->path)
-		ft_free_tab(pipex->path);
-	if (pipex->path_cmd)
-		ft_free_tab(pipex->path_cmd);
-}
 
-int	open_in_out_files(t_pipex *pipex, int argc, char *argv[], int type)
-{
-	if (type == 1)
-	{
-		printf("\n----%s----argv2\n", argv[1]);
-		pipex->fdin = open(argv[1], O_RDONLY, 0666);
-		if (pipex->fdin == -1)
-		{
-			close(pipex->fdin);
-			return (ft_putstr_fd("\nNo such files or directory\n", 1), 1);
-		}
-	}
-	if (type == 0)
-	{
-		pipex->fdout = open(argv[argc -1], O_WRONLY | O_CREAT | O_TRUNC, 0666);
-	}
-	return (0);
-}
-
-int	ft_clean_endfile(t_pipex *pipex, int argc, char *argv[], int type)
-{
-	open_in_out_files(pipex, argc, argv, type);
-	return (0);
-}
 
 int  make_pipe(t_pipex *pipex, char *env[], int i, int argc)
 {
@@ -63,10 +28,12 @@ int  make_pipe(t_pipex *pipex, char *env[], int i, int argc)
 		if (i == argc - 2)
 			dup2(pipex->fdout, 1);
 		else
+		{
 			dup2(pipex->pipe_fd[1],1);
+			
+		}
 		close(pipex->pipe_fd[1]);
 		exec_cmd(pipex, env);
-		
  	}
   	else
   	{
@@ -89,6 +56,9 @@ int main(int argc, char *argv[], char *env[])
    	pipex.paths = 0;
   	pipex.path_cmd = 0;
 	pipex.cmds = 0;
+	pipex.valid_cmd = 0;
+	pipex.all_cmd_valid = 0;
+	pipex.nbr_cmds = (argc - 3);
   
 	if (argc < 5)
 		return (-1);
@@ -96,27 +66,16 @@ int main(int argc, char *argv[], char *env[])
 	pipex.fdout = open(argv[argc -1], O_WRONLY | O_CREAT | O_TRUNC, 0777);
   	while (i <= argc - 2)
   	{
-
-		
 		get_cmd(&pipex, argv[i]);
+		print_double_tab(pipex.cmds);
+		printf("Nbr cmds %d\n", pipex.nbr_cmds);
 	  	ft_path(&pipex, pipex.cmds[0], env);
 		make_pipe(&pipex, env, i, argc);
 		ft_free_double_tab(pipex.cmds);
 	  	i++;
   	}
-
-	while (wait(NULL) > 0)
-			;
-	
-	if (pipex.path)
+	while (wait(NULL) > 0) ;
+	if (pipex.path && (pipex.all_cmd_valid == pipex.nbr_cmds))
 		free(pipex.path);
-	// if (pipex.cmds)
-	// 	ft_free_double_tab(pipex.cmds);
-	// if (pipex.paths)
-	// 	ft_free_double_tab(pipex.paths);
-	// if (pipex.path_cmd)
-	// 	ft_free_tab(pipex.path_cmd);
-	
-
 	return (0);
 }
