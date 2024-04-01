@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:31:15 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/01 22:06:17 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/01 22:14:58 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_pipex
     int     valid_cmd;
     int     all_cmd_valid;
     int     nbr_cmds;
+    int     nb_argc;
 
 }   t_pipex;
 
