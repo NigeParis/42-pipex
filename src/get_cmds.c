@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 08:29:28 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/01 23:35:52 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/02 10:24:10 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,15 @@ int	clean_cmd_path(t_pipex	*pipex)
 int	get_cmd(t_pipex *pipex, char *argv)
 {
 	pipex->cmds = ft_split(argv, ' ');
+	if (pipex->cmds[0] == NULL)
+	{	
+		
+		printf("-----------> pipex-cmds '%s'\n", pipex->cmds[0]);
+		return (-1);
+	}
 	if ((access(pipex->cmds[0], F_OK | R_OK)) == 0)
 		clean_cmd_path(pipex);
+	
 	return (0);
 }
 
@@ -53,17 +60,13 @@ void	exec_cmd(t_pipex *pipex, int i, char *argv[], char *env[])
 	int	ret;
 
 	ret = -1;
-		get_cmd(pipex, argv[i]);
-		// if (pipex->path_cmd)
-		// 	ft_free_tab(pipex->path_cmd);
-	  	ft_path(pipex, pipex->cmds[0], env);
-		if (pipex->cmds)
-		// 	ft_free_double_tab(pipex->cmds);
-		// if (pipex->paths)
-		// 	ft_free_double_tab(pipex->paths);
-
-
-
+	if ((get_cmd(pipex, argv[i])) == -1)
+	{
+		ft_path(pipex, "cat", env);	
+	}
+	else
+		ft_path(pipex, pipex->cmds[0], env);
+	if (pipex->cmds)
 	if (pipex->path == 0)
 	{
 		ft_putstr_fd("pipex : cnd not found\n", 2);
