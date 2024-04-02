@@ -42,14 +42,16 @@ typedef struct s_pipex
 }   t_pipex;
 
 
-int ft_get_line_nb(char pathname[], char *env[]);
-char **ft_get_paths(char *paths);
-int ft_path_error (t_pipex *pipex);
-int ft_path(t_pipex *pipex, char *cmd, char **env);
-int get_cmd(t_pipex *pipex, char *argv);
-void  exec_cmd(t_pipex *pipex, int i, char *argv[], char *env[]);
+int     ft_get_line_nb(char pathname[], char *env[]);
+char    **ft_get_paths(char *paths);
+int     ft_path_error (t_pipex *pipex);
+int     ft_path(t_pipex *pipex, char *cmd, char **env);
+int     get_cmd(t_pipex *pipex, char *argv);
+void    exec_cmd(t_pipex *pipex, int i, char *argv[], char *env[]);
 void    ft_cleanup(t_pipex *pipex, int type);
-void close_fd(t_pipex *pipex, int type);
+void    close_fd(t_pipex *pipex, int type);
+void	ft_cleanup_helper(t_pipex *pipex, int type);
+void	ft_init(t_pipex *pipex, int argc, char *argv[]);
 
 void	print_double_tab(char *tab[]); //construction tool
 

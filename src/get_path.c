@@ -47,31 +47,27 @@ int	ft_path(t_pipex *pipex, char *cmd, char **env)
 {
 	int	i;
 
-
 	i = 0;
 	while (ft_strncmp(env[i], "PATH", 4) != 0)
 		i++;
-
 	pipex->paths = ft_split(env[i] + 5, ':');
-	if (pipex->path)
-		free(pipex->path);
+	ft_cleanup_helper(pipex, 1);
 	i = 0;
 	pipex->valid_cmd = 1;
 	while (pipex->paths && pipex->paths[i])
 	{
 		pipex->path_cmd = ft_strjoin(pipex->paths[i], "/");
 		pipex->path = ft_strjoin(pipex->path_cmd, cmd);
-		free(pipex->path_cmd);
+		ft_cleanup_helper(pipex, 3);
 		if (access(pipex->path, F_OK | R_OK) == 0)
 		{
 			pipex->valid_cmd = 0;
 			pipex->all_cmd_valid++;
 			break ;
 		}
-		free(pipex->path);
+		ft_cleanup_helper(pipex, 1);
 		i++;
 	}
-	if (pipex->all_cmd_valid == pipex->nbr_cmds)
-		ft_free_double_tab(pipex->paths);
+	ft_cleanup(pipex, 7);
 	return (i);
 }
