@@ -51,6 +51,7 @@ int	ft_path(t_pipex *pipex, char *cmd, char **env)
 	i = 0;
 	while (ft_strncmp(env[i], "PATH", 4) != 0)
 		i++;
+
 	pipex->paths = ft_split(env[i] + 5, ':');
 	if (pipex->path)
 		free(pipex->path);

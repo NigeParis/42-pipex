@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/01 23:31:16 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/02 13:41:47 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int main(int argc, char *argv[], char *env[])
 	pipex.all_cmd_valid = 0;
 	pipex.nbr_cmds = (argc - 3);
 	pipex.nb_argc = argc;
+	pipex.parse_flag = 0;
   
 	if (argc < 5)
 		return (-1);
@@ -75,7 +76,15 @@ int main(int argc, char *argv[], char *env[])
   	}
 	while (wait(NULL) > 0) ;
 
-	ft_cleanup(&pipex, 4);
+	// if ((!pipex.parse_flag)&& (pipex.nb_argc > 2))
+	// 	ft_putstr_fd("pipex : parse error near\n", 2);
+	
+	close(pipex.pipe_fd[0]);
+	close(pipex.pipe_fd[1]);
+	
 
+	ft_cleanup(&pipex, 6);
+	close_fd(&pipex, 10);
+	
 	return (0);
 }
