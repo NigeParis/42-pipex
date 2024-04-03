@@ -45,7 +45,6 @@ int	get_cmd(t_pipex *pipex, char *argv)
 {
 
 	pipex->cmds = ft_split(argv, ' ');
-	print_double_tab(pipex->cmds);
 	if (!pipex->cmds[0])
 		return (-1);
 	if ((access(pipex->cmds[0], F_OK | R_OK)) == 0)

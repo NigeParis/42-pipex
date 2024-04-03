@@ -89,8 +89,7 @@ int		get_path_absolu(t_pipex *pipex, char *argv[], int i)
 			return (1);
 		}
 		pipex->uni_path_flag = 0;
-	
-
+		pipex->valid_cmd = 1;
 	}
 	return (0);
 }
@@ -111,9 +110,15 @@ int  make_pipe(t_pipex *pipex, char *env[], char *argv[], int i)
  	{	
 		close(pipex->pipe_fd[0]);
 		if (i == 2)
+		{
 			dup2(pipex->fdin, 0);
+			//ft_cleanup(pipex, 9);
+		}
 		if (i == pipex->nb_argc - 2)
+		{
 			dup2(pipex->fdout, 1);
+			ft_cleanup(pipex, 9);
+		}
 		else
 		{
 			close_fd(pipex, 10);
@@ -128,6 +133,9 @@ int  make_pipe(t_pipex *pipex, char *env[], char *argv[], int i)
 		close(pipex->pipe_fd[1]);
 		dup2(pipex->pipe_fd[0],0);
 		close(pipex->pipe_fd[0]);
+
+
+		
 	}
   	return (0);
 }
@@ -145,6 +153,7 @@ int main(int argc, char *argv[], char *env[])
   	{
 		get_path_absolu(&pipex, argv, i);
 		make_pipe(&pipex, env, argv, i);
+		
 	  	i++;
   	}
 	while (wait(NULL) > 0) 
@@ -152,6 +161,7 @@ int main(int argc, char *argv[], char *env[])
 	close(pipex.pipe_fd[0]);
 	close(pipex.pipe_fd[1]);
 	printf("COUCOU\n");
+
 	ft_cleanup(&pipex, 8);
 	close_fd(&pipex, 10);
 	return (0);
