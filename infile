@@ -1,14 +1,13 @@
-total 1608
-drwxr-xr-x 5 nrobinso 2023_paris      74 Apr  1 10:35 ARCHIVES
-drwxr-xr-x 3 nrobinso 2023_paris      54 Apr  2 13:01 ft_printf
-drwxr-xr-x 2 nrobinso 2023_paris    4096 Apr  2 13:01 get_next_line
-drwxr-xr-x 2 nrobinso 2023_paris      61 Apr  2 09:38 include
--rw-r--r-- 1 nrobinso 2023_paris     701 Apr  2 11:24 infile
-drwxr-xr-x 2 nrobinso 2023_paris    4096 Apr  2 13:01 libft
--rw-r--r-- 1 nrobinso 2023_paris    2253 Apr  1 10:35 Makefile
--rwxr-xr-x 1 nrobinso 2023_paris      33 Apr  2 13:01 outfile
--rwxr-xr-x 1 nrobinso 2023_paris   32440 Apr  2 13:01 pipex
--rw-r--r-- 1 nrobinso 2023_paris 1586470 Mar 30 08:01 pipex.pdf
--rw-r--r-- 1 nrobinso 2023_paris    1152 Mar 30 08:01 README.md
-drwxr-xr-x 2 nrobinso 2023_paris      72 Apr  2 13:01 src
-PINK drink
+total 112K
+-rw-r--r-- 1 nrobinso 2023_paris    3 Apr  3 10:40 a.out
+drwxr-xr-x 3 nrobinso 2023_paris   54 Apr  3 10:43 ft_printf
+drwxr-xr-x 2 nrobinso 2023_paris 4.0K Apr  3 10:43 get_next_line
+drwxr-xr-x 2 nrobinso 2023_paris   61 Apr  3 08:22 include
+-rw-r--r-- 1 nrobinso 2023_paris    0 Apr  3 10:43 infile
+drwxr-xr-x 2 nrobinso 2023_paris 4.0K Apr  3 10:43 libft
+-rw-r--r-- 1 nrobinso 2023_paris 2.3K Apr  3 08:22 Makefile
+-rwxr-xr-x 1 nrobinso 2023_paris  28K Apr  3 10:43 pipex
+drwxr-xr-x 4 nrobinso 2023_paris   70 Apr  3 08:24 pipex_tester
+-rw-r--r-- 1 nrobinso 2023_paris 1.2K Apr  3 10:13 README.md
+drwxr-xr-x 2 nrobinso 2023_paris   72 Apr  3 10:43 src
+-rw-r--r-- 1 nrobinso 2023_paris  61K Apr  3 08:25 tester_pipex.sh

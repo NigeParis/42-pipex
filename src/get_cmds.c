@@ -60,7 +60,7 @@ void	exec_cmd(t_pipex *pipex, int i, char *argv[], char *env[])
 	if ((get_cmd(pipex, argv[i])) == -1)
 	{
 		ft_path(pipex, "zz", env);	
-		ft_putstr_fd("\npipex: permission denied:", 2);
+		ft_putstr_fd("\npipex: permission denied:", 1);
 		ft_cleanup(pipex, 5);
 		close_fd(pipex, 10);
 		exit(127);
@@ -75,8 +75,8 @@ void	exec_cmd(t_pipex *pipex, int i, char *argv[], char *env[])
 	}
 	if (ret == -1)
 	{
-		ft_putstr_fd("\npipex: command not found:", 2);
-		ft_putstr_fd(pipex->cmds[0], 2);
+		ft_putstr_fd("\npipex: command not found:", 1);
+		ft_putstr_fd(pipex->cmds[0], 1);
 		ft_cleanup(pipex, 5);
 		close_fd(pipex, 10);
 		exit(127);

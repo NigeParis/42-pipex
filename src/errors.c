@@ -12,13 +12,6 @@
 
 #include "../include/pipex.h"
 
-int	ft_path_error(t_pipex *pipex)
-{
-    ft_printf("\n-----path_error--%s\n", pipex->path);
-	ft_putstr_fd("\nError command not found", 1);
-	return (1);
-}
-
 void	ft_cleanup_helper(t_pipex *pipex, int type)
 {
 	if (type == 4)
@@ -79,17 +72,17 @@ void close_fd(t_pipex *pipex, int type)
 {
 	if (type == 0)
 	{
-		if (pipex->fdin)
+		if (pipex->fdin != -1)
 			close (pipex->fdin);
 	}
 	if (type == 1)
 	{
-		if (pipex->fdout)
+		if (pipex->fdout != -1)
 			close (pipex->fdout);
 	}
 	if (type == 10)
 	{
-		if (pipex->fdin && pipex->fdout)
+		if (pipex->fdin != -1 && pipex->fdout != -1)
 		{
 			close (pipex->fdout);
 			close (pipex->fdin);

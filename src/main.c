@@ -23,21 +23,32 @@ void	ft_init(t_pipex *pipex, int argc, char *argv[])
 	pipex->nbr_cmds = (argc - 3);
 	pipex->nb_argc = argc;
 	pipex->parse_flag = 0;
+	pipex->fdin = -1;
+	pipex->fdout = -1;
+	ft_open_files(pipex, argc, argv);
+
+}
+
+void    ft_open_files(t_pipex *pipex, int argc, char *argv[])
+{
 	if (access(argv[1], F_OK | R_OK) == 0)
 		pipex->fdin = open(argv[1], O_RDONLY, 0777);
 	else if (access(argv[1], F_OK ) == -1)
 	{
-		ft_putstr_fd("pipex: no such file or directory: ", 2);
-		ft_putstr_fd(argv[1], 2);
-		exit (1);
+		perror(argv[1]);
+		exit (0);
 	}
 	else if (access(argv[1], R_OK ) == -1)
 	{
-		ft_putstr_fd("pipex: permission denied: ", 2);
-		ft_putstr_fd(argv[1], 2);
-		exit (1);
+		perror(argv[1]);
+		exit (127);
 	}
 	pipex->fdout = open(argv[argc -1], O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	if (pipex->fdout == -1)
+	{
+		close_fd(pipex, 0);
+		perror("outfile");
+	}
 }
 
 int  make_pipe(t_pipex *pipex, char *env[], char *argv[], int i)
@@ -45,7 +56,11 @@ int  make_pipe(t_pipex *pipex, char *env[], char *argv[], int i)
  	pid_t process;
 
 	pipe(pipex->pipe_fd);
+	if (pipe < 0)
+		perror("pipe");
   	process = fork();
+	if (process == -1)
+		perror("fork");
  	if (!process)
  	{	
 		close(pipex->pipe_fd[0]);
@@ -55,9 +70,11 @@ int  make_pipe(t_pipex *pipex, char *env[], char *argv[], int i)
 			dup2(pipex->fdout, 1);
 		else
 		{
+			close_fd(pipex, 10);
 			dup2(pipex->pipe_fd[1],1);
 		}
 		close(pipex->pipe_fd[1]);
+		close_fd(pipex, 10);
 		exec_cmd(pipex, i, argv, env);
  	}
   	else
@@ -76,7 +93,7 @@ int main(int argc, char *argv[], char *env[])
   
 	i = 2;
 	if (argc < 5)
-		return (-1);
+		return (1);
 	ft_init(&pipex, argc, argv);
   	while (i <= argc - 2)
   	{
