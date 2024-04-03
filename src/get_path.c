@@ -43,6 +43,7 @@ char	**ft_get_paths(char *paths)
 	return (tab);
 }
 
+
 int	ft_path(t_pipex *pipex, char *cmd, char **env)
 {
 	int	i;

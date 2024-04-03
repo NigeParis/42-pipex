@@ -40,13 +40,15 @@ int	clean_cmd_path(t_pipex	*pipex)
 	return (0);
 }
 
+
 int	get_cmd(t_pipex *pipex, char *argv)
 {
+	if (pipex->cmds)
+		ft_free_double_tab(pipex->cmds);
 	pipex->cmds = ft_split(argv, ' ');
-	if (pipex->cmds[0] == NULL)
-	{	
+	print_double_tab(pipex->cmds);
+	if (!pipex->cmds[0])
 		return (-1);
-	}
 	if ((access(pipex->cmds[0], F_OK | R_OK)) == 0)
 		clean_cmd_path(pipex);
 	return (0);
@@ -57,20 +59,25 @@ void	exec_cmd(t_pipex *pipex, int i, char *argv[], char *env[])
 	int	ret;
 
 	ret = -1;
-	if ((get_cmd(pipex, argv[i])) == -1)
+	if (pipex->uni_path_flag == 0)
 	{
-		ft_path(pipex, "zz", env);	
-		ft_putstr_fd("\npipex: permission denied:", 1);
-		ft_cleanup(pipex, 5);
-		close_fd(pipex, 10);
-		exit(127);
+		if ((get_cmd(pipex, argv[i])) == -1)
+		{
+			ft_path(pipex, "zz", env);	
+			ft_putstr_fd("\npipex: permission denied:", 1);
+			ft_cleanup(pipex, 5);
+			close_fd(pipex, 10);
+			exit(127);
+		}
+		else
+			ft_path(pipex, pipex->cmds[0], env);
+		
 	}
-	else
-		ft_path(pipex, pipex->cmds[0], env);
 	if (pipex->valid_cmd == 0)
 	{
 		pipex->valid_cmd = 1;
-		ft_free_double_tab(pipex->paths);
+		// if (pipex->paths)
+		// 	ft_free_double_tab(pipex->paths);
 		ret = execve(pipex->path, pipex->cmds, env);
 	}
 	if (ret == -1)
@@ -83,7 +90,6 @@ void	exec_cmd(t_pipex *pipex, int i, char *argv[], char *env[])
 	}
 }
 
-
 void	print_double_tab(char *tab[])
 {
 	int i;
@@ -95,4 +101,20 @@ void	print_double_tab(char *tab[])
 		printf("%s\n", tab[i]);
 		i++;
 	}	
+}
+
+void print_cmd_path(t_pipex *pipex)
+{
+
+	ft_putchar_fd('\n', 1);
+	ft_putstr_fd(pipex->path, 1);
+	ft_putchar_fd('\n', 1);
+	ft_putstr_fd(pipex->cmds[0], 1);
+	ft_putchar_fd('\n', 1);
+	ft_putstr_fd(pipex->cmds[1], 1);
+	ft_putchar_fd('\n', 1);
+	// ft_putstr_fd(pipex->uni_path, 1);
+	// ft_putchar_fd('\n', 1);
+
+
 }

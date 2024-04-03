@@ -1,13 +1,7 @@
-total 112K$
--rw-r--r-- 1 nrobinso 2023_paris    3 Apr  3 10:40 a.out$
-drwxr-xr-x 3 nrobinso 2023_paris   54 Apr  3 10:43 ft_printf$
-drwxr-xr-x 2 nrobinso 2023_paris 4.0K Apr  3 10:43 get_next_line$
-drwxr-xr-x 2 nrobinso 2023_paris   61 Apr  3 08:22 include$
--rw-r--r-- 1 nrobinso 2023_paris    0 Apr  3 10:43 infile$
-drwxr-xr-x 2 nrobinso 2023_paris 4.0K Apr  3 10:43 libft$
--rw-r--r-- 1 nrobinso 2023_paris 2.3K Apr  3 08:22 Makefile$
--rwxr-xr-x 1 nrobinso 2023_paris  28K Apr  3 10:43 pipex$
-drwxr-xr-x 4 nrobinso 2023_paris   70 Apr  3 08:24 pipex_tester$
--rw-r--r-- 1 nrobinso 2023_paris 1.2K Apr  3 10:13 README.md$
-drwxr-xr-x 2 nrobinso 2023_paris   72 Apr  3 10:43 src$
--rw-r--r-- 1 nrobinso 2023_paris  61K Apr  3 08:25 tester_pipex.sh$
+     1	     1	total 112$
+     2	     2	drwxr-xr-x  9 nrobinso 2023_paris  4096 Apr  3 11:19 .$
+     3	     3	drwxr-xr-x 12 nrobinso 2023_paris   217 Apr  3 08:28 ..$
+     4	     4	drwxr-xr-x  3 nrobinso 2023_paris    54 Apr  3 11:19 ft_printf$
+     5	     5	drwxr-xr-x  2 nrobinso 2023_paris  4096 Apr  3 11:19 get_next_line$
+     6	     6	drwxr-xr-x  8 nrobinso 2023_paris   185 Apr  3 10:50 .git$
+     7	     7	drwxr-xr-x  2 nrobinso 2023_paris    61 Apr  3 08:22 include$

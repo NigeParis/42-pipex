@@ -33,6 +33,9 @@ typedef struct s_pipex
     char    *path_cmd;
     char    *path;
     char    **cmds;
+    char    **uni_path;
+    char    *uni_cmd;
+    int     uni_path_flag;
     int     valid_cmd;
     int     all_cmd_valid;
     int     nbr_cmds;
@@ -52,9 +55,10 @@ void    close_fd(t_pipex *pipex, int type);
 void	ft_cleanup_helper(t_pipex *pipex, int type);
 void	ft_init(t_pipex *pipex, int argc, char *argv[]);
 void    ft_open_files(t_pipex *pipex, int argc, char *argv[]);
-
+int		get_path_absolu(t_pipex *pipex, char *argv[], int i);
 
 void	print_double_tab(char *tab[]); //construction tool
+void    print_cmd_path(t_pipex *pipex);
 
 
 #endif
