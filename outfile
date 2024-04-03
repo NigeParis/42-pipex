@@ -1,7 +1,9 @@
-     1	     1	total 112$
-     2	     2	drwxr-xr-x  9 nrobinso 2023_paris  4096 Apr  3 11:19 .$
-     3	     3	drwxr-xr-x 12 nrobinso 2023_paris   217 Apr  3 08:28 ..$
-     4	     4	drwxr-xr-x  3 nrobinso 2023_paris    54 Apr  3 11:19 ft_printf$
-     5	     5	drwxr-xr-x  2 nrobinso 2023_paris  4096 Apr  3 11:19 get_next_line$
-     6	     6	drwxr-xr-x  8 nrobinso 2023_paris   185 Apr  3 10:50 .git$
-     7	     7	drwxr-xr-x  2 nrobinso 2023_paris    61 Apr  3 08:22 include$
+     1	     1	total 76K$
+     2	     2	drwxr-xr-x 2 nrobinso 2023_paris   18 Apr  3 13:20 bintest$
+     3	     3	drwxr-xr-x 3 nrobinso 2023_paris   33 Apr  3 19:18 ft_printf$
+     4	     4	drwxr-xr-x 2 nrobinso 2023_paris  190 Apr  3 19:18 get_next_line$
+     5	     5	drwxr-xr-x 2 nrobinso 2023_paris   61 Apr  3 08:22 include$
+     6	     6	drwxr-xr-x 2 nrobinso 2023_paris 4.0K Apr  3 19:18 libft$
+     7	     7	-rw-r--r-- 1 nrobinso 2023_paris 2.3K Apr  3 08:22 Makefile$
+     8	     8	drwxr-xr-x 4 nrobinso 2023_paris   70 Apr  3 08:24 pipex_tester$
+     9	     9	-rw-r--r-- 1 nrobinso 2023_paris 1.2K Apr  3 10:13 README.md$

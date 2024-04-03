@@ -43,8 +43,7 @@ int	clean_cmd_path(t_pipex	*pipex)
 
 int	get_cmd(t_pipex *pipex, char *argv)
 {
-	if (pipex->cmds)
-		ft_free_double_tab(pipex->cmds);
+
 	pipex->cmds = ft_split(argv, ' ');
 	print_double_tab(pipex->cmds);
 	if (!pipex->cmds[0])
