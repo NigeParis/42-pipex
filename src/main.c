@@ -115,15 +115,9 @@ int  make_pipe(t_pipex *pipex, char *env[], char *argv[], int i)
  	{	
 		close(pipex->pipe_fd[0]);
 		if (i == 2)
-		{
 			dup2(pipex->fdin, 0);
-			//ft_cleanup(pipex, 9);
-		}
 		if (i == pipex->nb_argc - 2)
-		{
 			dup2(pipex->fdout, 1);
-		//	ft_cleanup(pipex, 9);
-		}
 		else
 		{
 			close_fd(pipex, 10);
@@ -139,9 +133,6 @@ int  make_pipe(t_pipex *pipex, char *env[], char *argv[], int i)
 		close(pipex->pipe_fd[1]);
 		dup2(pipex->pipe_fd[0],0);
 		close(pipex->pipe_fd[0]);
-
-
-		
 	}
   	return (0);
 }

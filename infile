@@ -1,9 +1,0 @@
--rw-r--r-- 1 nrobinso 2023_paris    0 Apr  4 16:17 infile
-drwxr-xr-x 2 nrobinso 2023_paris 4.0K Apr  4 16:10 libft
--rw-r--r-- 1 nrobinso 2023_paris 2.3K Apr  3 20:46 Makefile
--rwxr-xr-x 1 nrobinso 2023_paris    3 Apr  4 16:09 outfile
--rwxr-xr-x 1 nrobinso 2023_paris  29K Apr  4 16:10 pipex
-drwxr-xr-x 4 nrobinso 2023_paris   70 Apr  4 15:38 pipex_tester
--rw-r--r-- 1 nrobinso 2023_paris 1.2K Apr  3 20:46 README.md
-drwxr-xr-x 2 nrobinso 2023_paris   72 Apr  4 16:10 src
--rw-r--r-- 1 nrobinso 2023_paris  61K Apr  4 15:39 tester_pipex.sh
