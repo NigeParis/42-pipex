@@ -25,9 +25,6 @@ void	ft_init(t_pipex *pipex, int argc, char *argv[])
 	pipex->parse_flag = 0;
 	pipex->fdin = -1;
 	pipex->fdout = -1;
-	pipex->uni_path_flag = 0;
-	pipex->uni_cmd = 0;
-	pipex->uni_path = 0;
 	ft_open_files(pipex, argc, argv);
 
 }
@@ -55,45 +52,6 @@ void    ft_open_files(t_pipex *pipex, int argc, char *argv[])
 }
 
 
-int		get_path_absolu(t_pipex *pipex, char *argv[], int i)
-{
-	int j;
-
-	j = 0;
-	while (argv[i][j] != '\0' && argv[i][j] != ' ')
-	{
-		if (argv[i][j] == '/')
-			pipex->uni_path_flag = 1;
-		j++;
-	}
-	if (pipex->uni_path_flag)
-	{
-		if (pipex->uni_path)
-			ft_free_double_tab(pipex->uni_path);
-		pipex->uni_path = ft_split(argv[i], ' ');
-		if (access(pipex->uni_path[0], F_OK | R_OK) == 0)
-		{
-			if ((get_cmd(pipex, argv[i])) == -1)
-			{
-				ft_putstr_fd("\npipex: permission denied:", 1);
-				ft_cleanup(pipex, 5);
-				close_fd(pipex, 10);
-				exit(127);
-			}
-			pipex->valid_cmd = 0;
-			pipex->all_cmd_valid++;
-			ft_free_tab(pipex->path);
-			pipex->path = ft_strdup(pipex->uni_path[0]);
-			ft_free_double_tab(pipex->cmds);
-			pipex->cmds = pipex->uni_path;
-			return (1);
-		}
-		pipex->uni_path_flag = 0;
-		pipex->valid_cmd = 1;
-	}
-	return (0);
-}
-
 
 
 int  make_pipe(t_pipex *pipex, char *env[], char *argv[], int i)
@@ -117,7 +75,7 @@ int  make_pipe(t_pipex *pipex, char *env[], char *argv[], int i)
 		if (i == pipex->nb_argc - 2)
 		{
 			dup2(pipex->fdout, 1);
-			ft_cleanup(pipex, 9);
+			//ft_cleanup(pipex, 9);
 		}
 		else
 		{
@@ -151,7 +109,7 @@ int main(int argc, char *argv[], char *env[])
 	ft_init(&pipex, argc, argv);
   	while (i <= argc - 2)
   	{
-		get_path_absolu(&pipex, argv, i);
+		
 		make_pipe(&pipex, env, argv, i);
 		
 	  	i++;

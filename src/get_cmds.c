@@ -48,7 +48,10 @@ int	get_cmd(t_pipex *pipex, char *argv)
 	if (!pipex->cmds[0])
 		return (-1);
 	if ((access(pipex->cmds[0], F_OK | R_OK)) == 0)
+	{
 		clean_cmd_path(pipex);
+		return (0);
+	}
 	return (0);
 }
 
@@ -57,8 +60,7 @@ void	exec_cmd(t_pipex *pipex, int i, char *argv[], char *env[])
 	int	ret;
 
 	ret = -1;
-	if (pipex->uni_path_flag == 0)
-	{
+	
 		if ((get_cmd(pipex, argv[i])) == -1)
 		{
 			ft_path(pipex, "zz", env);	
@@ -67,25 +69,21 @@ void	exec_cmd(t_pipex *pipex, int i, char *argv[], char *env[])
 			close_fd(pipex, 10);
 			exit(127);
 		}
-		else
-			ft_path(pipex, pipex->cmds[0], env);
+		ft_path(pipex, pipex->cmds[0], env);
 		
-	}
-	if (pipex->valid_cmd == 0)
-	{
-		pipex->valid_cmd = 1;
-		// if (pipex->paths)
-		// 	ft_free_double_tab(pipex->paths);
 		ret = execve(pipex->path, pipex->cmds, env);
-	}
-	if (ret == -1)
-	{
-		ft_putstr_fd("\npipex: command not found:", 1);
-		ft_putstr_fd(pipex->cmds[0], 1);
-		ft_cleanup(pipex, 5);
-		close_fd(pipex, 10);
-		exit(127);
-	}
+	
+		if (ret == -1)
+		{
+			ft_putstr_fd("\npipex: command not found:", 1);
+			ft_putstr_fd(pipex->cmds[0], 1);
+			ft_cleanup(pipex, 5);
+			ft_cleanup_helper(pipex, 1);
+
+			close_fd(pipex, 10);
+			exit(127);
+			
+		}
 }
 
 void	print_double_tab(char *tab[])

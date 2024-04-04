@@ -58,15 +58,16 @@ int	ft_path(t_pipex *pipex, char *cmd, char **env)
 	while (pipex->paths && pipex->paths[i])
 	{
 		pipex->path_cmd = ft_strjoin(pipex->paths[i], "/");
+		ft_cleanup_helper(pipex, 1);
 		pipex->path = ft_strjoin(pipex->path_cmd, cmd);
 		ft_cleanup_helper(pipex, 3);
 		if (access(pipex->path, F_OK | R_OK) == 0)
 		{
 			pipex->valid_cmd = 0;
 			pipex->all_cmd_valid++;
-			break ;
+			ft_cleanup(pipex, 7);
+			return (0);
 		}
-		ft_cleanup_helper(pipex, 1);
 		i++;
 	}
 	ft_cleanup(pipex, 7);
