@@ -1,0 +1,8 @@
+strace -ff -tt  -o ./pipex infile "aa" "zz" outfile 
+
+
+
+
+
+
+

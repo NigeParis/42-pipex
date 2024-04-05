@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 18:13:47 by nrobinso          #+#    #+#             */
-/*   Updated: 2023/12/03 18:11:23 by nige42           ###   ########.fr       */
+/*   Updated: 2024/04/05 17:41:19 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	ft_formatcheck(va_list input, char c)
 		nb_put = ft_printf_char((va_arg(input, int)));
 	else if (c == 's')
 		nb_put = ft_printf_str(va_arg(input, char *));
+	else if (c == 'F')
+		nb_put = ft_printf_str_fd(va_arg(input, char *), (va_arg(input, int)));
 	else if (c == 'u')
 		nb_put = ft_printf_unsigned_nbr((va_arg(input, unsigned int)));
 	else if (c == 'x')
