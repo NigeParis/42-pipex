@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:31:15 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/06 10:52:35 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/06 11:58:35 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef struct s_pipex
 
 }   t_pipex;
 
-
 int     ft_get_line_nb(char pathname[], char *env[]);
 char    **ft_get_paths(char *paths);
 int     ft_path(t_pipex *pipex, char *cmd, char **env);
@@ -60,9 +59,8 @@ void	ft_cleanup_helper(t_pipex *pipex, int type);
 void	ft_init(t_pipex *pipex, int argc, char *argv[]);
 void    ft_open_files(t_pipex *pipex, int argc, char *argv[]);
 int		get_path_absolu(t_pipex *pipex, char *argv[], int i);
-
-void	print_double_tab(char *tab[]); //construction tool
-void    print_cmd_path(t_pipex *pipex);
-
+int     make_pipe(t_pipex *pipex, char *env[], char *argv[], int i);
+void	child_process(t_pipex *pipex, char *argv[], char *env[], int i);
+void	parent_process(t_pipex *pipex);
 
 #endif

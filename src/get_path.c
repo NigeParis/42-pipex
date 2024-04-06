@@ -68,7 +68,6 @@ int	ft_path(t_pipex *pipex, char *cmd, char **env)
 		}
 		ft_cleanup(pipex, 1);
 		i++;
-
 	}
 	ft_cleanup(pipex, 7);
 	return (i);

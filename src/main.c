@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/06 10:48:40 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/06 11:54:51 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,27 @@ void    ft_open_files(t_pipex *pipex, int argc, char *argv[])
 	}
 }
 
+int	path_absolu_valid(t_pipex *pipex, char *argv[], int i)
+{
+
+	if (access(pipex->uni_path[0], F_OK | R_OK) == 0)
+	{
+		if ((get_cmd(pipex, argv[i])) == -1)
+		{
+			ft_putstr_fd("pipex: permission denied:", 1);
+			ft_cleanup(pipex, 5);
+			close_fd(pipex, 10);
+			exit(127);
+		}
+		pipex->valid_cmd = 0;
+		pipex->all_cmd_valid++;
+		ft_cleanup(pipex, 8);
+		pipex->path = ft_strdup(pipex->uni_path[0]);
+		pipex->cmds = pipex->uni_path;
+		return (1);
+	}	
+	return (0);
+}
 
 int		get_path_absolu(t_pipex *pipex, char *argv[], int i)
 {
@@ -72,77 +93,28 @@ int		get_path_absolu(t_pipex *pipex, char *argv[], int i)
 		if (pipex->uni_path)
 			ft_free_double_tab(pipex->uni_path);
 		pipex->uni_path = ft_split(argv[i], ' ');
-		if (access(pipex->uni_path[0], F_OK | R_OK) == 0)
-		{
-			if ((get_cmd(pipex, argv[i])) == -1)
-			{
-				ft_putstr_fd("pipex: permission denied:", 1);
-				ft_cleanup(pipex, 5);
-				close_fd(pipex, 10);
-				exit(127);
-			}
-			pipex->valid_cmd = 0;
-			pipex->all_cmd_valid++;
-			ft_free_tab(pipex->path);
-			pipex->path = ft_strdup(pipex->uni_path[0]);
-			ft_free_double_tab(pipex->cmds);
-			pipex->cmds = pipex->uni_path;
+		if (path_absolu_valid(pipex, argv, i))
 			return (1);
-		}
 		pipex->uni_path_flag = 0;
 		pipex->valid_cmd = 1;
-		ft_free_tab(pipex->path);
-		ft_free_double_tab(pipex->cmds);
+		ft_cleanup(pipex, 8);
 		if (pipex->uni_path)
-		ft_free_double_tab(pipex->uni_path);
-		
-
+			ft_free_double_tab(pipex->uni_path);
 	}
-
 	return (0);
 }
 
 
 
-int  make_pipe(t_pipex *pipex, char *env[], char *argv[], int i)
-{
- 	pid_t process;
 
-	pipe(pipex->pipe_fd);
-	if (pipe < 0)
-		perror("pipe");
-  	process = fork();
-	if (process == -1)
-		perror("fork");
- 	if (!process)
- 	{	
-		close(pipex->pipe_fd[0]);
-		if (i == 2)
-			dup2(pipex->fdin, 0);
-		if (i == pipex->nb_argc - 2)
-		{
-			dup2(pipex->fdout, 1);
-			close_fd(pipex, 1);
-		}		
-		else
-		{
-			dup2(pipex->pipe_fd[1],1);
-			close(pipex->pipe_fd[0]);
-		}
-		close_fd(pipex, 10);
-		close(pipex->pipe_fd[1]);
-		get_path_absolu(pipex, argv, i);
-		exec_cmd(pipex, i, argv, env);
- 	}
-  	else
-  	{
-		close(pipex->pipe_fd[1]);
-		dup2(pipex->pipe_fd[0],0);
-		close(pipex->pipe_fd[1]);
-	}
-	
-  	return (0);
-}
+
+
+
+
+
+
+
+
 
 int main(int argc, char *argv[], char *env[])
 {
@@ -163,8 +135,6 @@ int main(int argc, char *argv[], char *env[])
   	}
 	while (wait(NULL) > 0) 
 		;
-//	close(pipex.pipe_fd[0]);
-//	close(pipex.pipe_fd[1]);
 	ft_cleanup(&pipex, 8);
 	close_fd(&pipex, 10);
 	return (0);

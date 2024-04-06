@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 08:29:28 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/06 08:45:59 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/06 11:22:54 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,41 +80,3 @@ void	exec_cmd(t_pipex *pipex, int i, char *argv[], char *env[])
 		exit(127);
 	}
 }
-
-
-
-
-
-
-
-
-// /* functions for constructiob */
-
-// void	print_double_tab(char *tab[])
-// {
-// 	int i;
-
-// 	i = 0;
-
-// 	while (tab && tab[i])
-// 	{
-// 		printf("%s\n", tab[i]);
-// 		i++;
-// 	}	
-// }
-
-// void print_cmd_path(t_pipex *pipex)
-// {
-
-// 	ft_putchar_fd('\n', 1);
-// 	ft_putstr_fd(pipex->path, 1);
-// 	ft_putchar_fd('\n', 1);
-// 	ft_putstr_fd(pipex->cmds[0], 1);
-// 	ft_putchar_fd('\n', 1);
-// 	ft_putstr_fd(pipex->cmds[1], 1);
-// 	ft_putchar_fd('\n', 1);
-// 	// ft_putstr_fd(pipex->uni_path, 1);
-// 	// ft_putchar_fd('\n', 1);
-
-
-// }
