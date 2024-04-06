@@ -17,8 +17,9 @@ OBJ_DIR=
 INCLUDE=./src/
 SRC=ft_printf.c ft_formatcheck.c ft_printf_unsigned_nbr.c
 SRC+=ft_printf_nbr.c ft_printf_str.c ft_len_of_nbr.c
-SRC+=ft_printf_hex.c ft_printf_ptr.c ft_printf_char.c ft_printf_str_fd.c 
-SRC+=ft_printf_char_fd.c 
+SRC+=ft_printf_hex.c ft_printf_ptr.c ft_printf_char.c 
+SRC+=ft_printf_str_fd.c ft_formatchk_fd.c
+SRC+=ft_printf_char_fd.c ft_printf_strlen.c ft_printf_fd.c 
 HEADER=ft_printf.h
 ###############################################################################
 ## RULES

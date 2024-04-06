@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 08:29:28 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/05 15:46:30 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/06 08:45:59 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	exec_cmd(t_pipex *pipex, int i, char *argv[], char *env[])
 		{
 			
 			ft_path(pipex, "null", env);	
-			ft_exec_cmd_error(pipex, "\npipex: permission denied: ");
+			ft_exec_cmd_error(pipex, "pipex: permission denied: ");
 			exit(127);
 		}
 		else
@@ -76,7 +76,7 @@ void	exec_cmd(t_pipex *pipex, int i, char *argv[], char *env[])
 	}
 	if (ret == -1)
 	{
-		ft_exec_cmd_error(pipex, "\npipex: command not found: ");	
+		ft_exec_cmd_error(pipex, "pipex: command not found: ");	
 		exit(127);
 	}
 }

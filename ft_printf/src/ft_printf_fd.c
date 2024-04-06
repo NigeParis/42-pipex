@@ -1,19 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_char_fd.c                                :+:      :+:    :+:   */
+/*   ft_printf_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/19 15:52:51 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/06 09:08:54 by nrobinso         ###   ########.fr       */
+/*   Created: 2023/11/26 07:45:04 by nrobinso          #+#    #+#             */
+/*   Updated: 2024/04/06 10:18:26 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <stdio.h>
 
-size_t	ft_printf_char_fd(char c, int fd)
+int	ft_printf_fd(int fd, const char *str, ...)
 {
-	write(fd, &c, 1);
-	return (1);
+	va_list	input;
+	int		print_size;
+	size_t	i;
+
+	i = 0;
+	print_size = 0;
+	if (!str)
+		return (-1);
+	va_start(input, str);
+	while (str[i])
+	{
+		if (str[i] == '%')
+		{
+			i++;
+			print_size += ft_formatchk_fd(fd, input, str[i]);
+		}
+		else
+		{
+			print_size++;
+			ft_printf_char_fd(str[i], fd);
+		}
+		i++;
+	}
+	va_end(input);
+	return (print_size);
 }

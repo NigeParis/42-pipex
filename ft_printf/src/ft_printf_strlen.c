@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_printf_strlen.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 21:56:57 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/06 09:04:04 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/06 08:56:46 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,19 @@
 * same result as strlen() or maxlen, whichever is smaller.
 **/
 
-#include "libft.h"
+#include "ft_printf.h"
 
-size_t	ft_strlen(const char *s)
+size_t	ft_printf_strlen(const char *s)
 {
 	size_t	len;
-	size_t	i;
 
 	len = 0;
-	i = 0;
 	if (!s)
 		return (0);
-	while (s && s[i])
+	while (s && *s)
 	{
 		len++;
-		i++;
+		s++;
 	}
 	return (len);
 }

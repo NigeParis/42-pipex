@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_formatcheck.c                                   :+:      :+:    :+:   */
+/*   ft_formatchk _fd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 18:13:47 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/06 10:04:25 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/06 10:19:11 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_formatcheck(va_list input, char c)
+int	ft_formatchk_fd(int fd, va_list input, char c)
 {
 	size_t	nb_put;
 
@@ -33,6 +33,8 @@ int	ft_formatcheck(va_list input, char c)
 		nb_put = ft_printf_ptr(2, (va_arg(input, size_t)), "0123456789abcdef");
 	else if (c == '%')
 		nb_put = ft_printf_char('%');
+	else if (c == 'F')
+		nb_put = ft_printf_str_fd(fd, va_arg(input, char *));		
 	else
 		return (0);
 	return (nb_put);

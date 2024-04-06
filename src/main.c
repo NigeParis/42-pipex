@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/05 18:03:17 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/06 10:48:40 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void	ft_init(t_pipex *pipex, int argc, char *argv[])
 
 void    ft_open_files(t_pipex *pipex, int argc, char *argv[])
 {
-	if (access(argv[1], F_OK | R_OK) == 0)
-		pipex->fdin = open(argv[1], O_RDONLY, 0777);
 	if (access(argv[1], F_OK ) == -1)
 	{
 		perror(argv[1]);
@@ -47,6 +45,8 @@ void    ft_open_files(t_pipex *pipex, int argc, char *argv[])
 		perror(argv[1]);
 		exit (0);
 	}
+	if (access(argv[1], F_OK | R_OK) == 0)
+		pipex->fdin = open(argv[1], O_RDONLY, 0777);
 	pipex->fdout = open(argv[argc -1], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (pipex->fdout == -1)
 	{
@@ -163,8 +163,8 @@ int main(int argc, char *argv[], char *env[])
   	}
 	while (wait(NULL) > 0) 
 		;
-	close(pipex.pipe_fd[0]);
-	close(pipex.pipe_fd[1]);
+//	close(pipex.pipe_fd[0]);
+//	close(pipex.pipe_fd[1]);
 	ft_cleanup(&pipex, 8);
 	close_fd(&pipex, 10);
 	return (0);

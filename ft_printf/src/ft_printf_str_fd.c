@@ -6,26 +6,26 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 16:05:27 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/05 17:30:07 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/06 10:24:44 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-size_t	ft_printf_str_fd(char *s, int fd)
+size_t	ft_printf_str_fd(int fd, char *s)
 {
 	size_t	count;
-
+	
 	count = 0;
 	if (!s)
 	{
-		count = ft_printf_str_fd("(null)", fd);
+		write(fd, "",1);
 		return (count);
 	}
-	while (*s)
+	else
 	{
-		count += ft_printf_char_fd(*s, fd);
-		s++;
+		count = ft_printf_strlen(s);
+		write(fd, s, count);
 	}
 	return (count);
 }
