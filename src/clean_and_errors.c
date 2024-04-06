@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 11:52:01 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/06 11:13:59 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/06 12:31:08 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,12 +106,12 @@ void	ft_exec_cmd_error(t_pipex *pipex, char *message)
 	char	str[100];
 	int		i;
 	int		j;
-		
+
 	i = 0;
 	j = 0;
 	while (message && message[i])
 	{
-		str[i] =  message[i]; 
+		str[i] = message[i];
 		i++;
 	}
 	while (pipex->cmds[0] && pipex->cmds[0][j])

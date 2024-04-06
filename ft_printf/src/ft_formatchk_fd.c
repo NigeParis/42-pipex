@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_formatchk _fd.c                                 :+:      :+:    :+:   */
+/*   ft_formatchk_fd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 18:13:47 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/06 10:19:11 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/06 12:36:50 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_formatchk_fd(int fd, va_list input, char c)
 	else if (c == '%')
 		nb_put = ft_printf_char('%');
 	else if (c == 'F')
-		nb_put = ft_printf_str_fd(fd, va_arg(input, char *));		
+		nb_put = ft_printf_str_fd(fd, va_arg(input, char *));
 	else
 		return (0);
 	return (nb_put);

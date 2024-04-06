@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 08:29:28 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/06 11:22:54 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/06 12:29:45 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,8 @@ int	clean_cmd_path(t_pipex	*pipex)
 	return (0);
 }
 
-
 int	get_cmd(t_pipex *pipex, char *argv)
 {
-
 	pipex->cmds = ft_split(argv, ' ');
 	if (!pipex->cmds[0])
 		return (-1);
@@ -52,17 +50,16 @@ int	get_cmd(t_pipex *pipex, char *argv)
 	return (0);
 }
 
-
 void	exec_cmd(t_pipex *pipex, int i, char *argv[], char *env[])
 {
 	int	ret;
+
 	ret = -1;
 	if (pipex->uni_path_flag == 0)
 	{
 		if ((get_cmd(pipex, argv[i])) == -1)
 		{
-			
-			ft_path(pipex, "null", env);	
+			ft_path(pipex, "null", env);
 			ft_exec_cmd_error(pipex, "pipex: permission denied: ");
 			exit(127);
 		}
@@ -76,7 +73,7 @@ void	exec_cmd(t_pipex *pipex, int i, char *argv[], char *env[])
 	}
 	if (ret == -1)
 	{
-		ft_exec_cmd_error(pipex, "pipex: command not found: ");	
+		ft_exec_cmd_error(pipex, "pipex: command not found: ");
 		exit(127);
 	}
 }

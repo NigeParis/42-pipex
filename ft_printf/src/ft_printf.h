@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 07:43:04 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/06 10:24:09 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/06 12:34:48 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ int		ft_len_of_nbr(unsigned int nb);
 size_t	ft_printf_hex(int flag, unsigned int nbr, char *base);
 size_t	ft_printf_ptr(int flag, size_t nbr, char *base);
 size_t	ft_printf_char(char c);
-int		ft_printf_fd(int, const char *str, ...);
+int		ft_printf_fd(int fd, const char *str, ...);
 size_t	ft_printf_char_fd(char c, int fd);
 size_t	ft_printf_str_fd(int fd, char *s);
 size_t	ft_printf_strlen(const char *s);
-int		ft_formatchk_fd(int, va_list input, char c);
+int		ft_formatchk_fd(int fd, va_list input, char c);
 
 #endif

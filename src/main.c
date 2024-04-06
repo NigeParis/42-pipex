@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/06 11:54:51 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/06 12:27:30 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	ft_init(t_pipex *pipex, int argc, char *argv[])
 {
- 	pipex->path = 0;  
-   	pipex->paths = 0;
-  	pipex->path_cmd = 0;
+	pipex->path = 0;
+	pipex->paths = 0;
+	pipex->path_cmd = 0;
 	pipex->cmds = 0;
 	pipex->valid_cmd = 0;
 	pipex->all_cmd_valid = 0;
@@ -28,19 +28,18 @@ void	ft_init(t_pipex *pipex, int argc, char *argv[])
 	pipex->uni_path_flag = 0;
 	pipex->uni_cmd = 0;
 	pipex->uni_path = 0;
-	pipex->cmd_not_flag =0;
+	pipex->cmd_not_flag = 0;
 	ft_open_files(pipex, argc, argv);
-
 }
 
-void    ft_open_files(t_pipex *pipex, int argc, char *argv[])
+void	ft_open_files(t_pipex *pipex, int argc, char *argv[])
 {
-	if (access(argv[1], F_OK ) == -1)
+	if (access(argv[1], F_OK) == -1)
 	{
 		perror(argv[1]);
 		exit (0);
 	}
-	else if (access(argv[1], R_OK ) == -1)
+	else if (access(argv[1], R_OK) == -1)
 	{
 		perror(argv[1]);
 		exit (0);
@@ -57,7 +56,6 @@ void    ft_open_files(t_pipex *pipex, int argc, char *argv[])
 
 int	path_absolu_valid(t_pipex *pipex, char *argv[], int i)
 {
-
 	if (access(pipex->uni_path[0], F_OK | R_OK) == 0)
 	{
 		if ((get_cmd(pipex, argv[i])) == -1)
@@ -77,9 +75,9 @@ int	path_absolu_valid(t_pipex *pipex, char *argv[], int i)
 	return (0);
 }
 
-int		get_path_absolu(t_pipex *pipex, char *argv[], int i)
+int	get_path_absolu(t_pipex *pipex, char *argv[], int i)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (argv[i][j] != '\0' && argv[i][j] != ' ')
@@ -104,36 +102,24 @@ int		get_path_absolu(t_pipex *pipex, char *argv[], int i)
 	return (0);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-int main(int argc, char *argv[], char *env[])
+int	main(int argc, char *argv[], char *env[])
 {
-	t_pipex pipex;
-	int     i;
-  
+	t_pipex	pipex;
+	int		i;
+
 	i = 2;
 	if (argc < 5)
 		return (1);
 	ft_init(&pipex, argc, argv);
-  	while (i <= argc - 2)
-  	{
+	while (i <= argc - 2)
+	{
 		make_pipe(&pipex, env, argv, i);
 		close(pipex.pipe_fd[0]);
 		close(pipex.pipe_fd[1]);
-		ft_cleanup(&pipex, 8);	
-	  	i++;
-  	}
-	while (wait(NULL) > 0) 
+		ft_cleanup(&pipex, 8);
+		i++;
+	}
+	while (wait(NULL) > 0)
 		;
 	ft_cleanup(&pipex, 8);
 	close_fd(&pipex, 10);
