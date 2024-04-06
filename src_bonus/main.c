@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/06 16:00:27 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/06 16:20:58 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,14 @@ int	main(int argc, char *argv[], char *env[])
 	t_pipex	pipex;
 	int		i;
 
+	unlink(argv[argc - 1]);
 	if (ft_strcmp (argv[1], "here_doc") == 0)
 	{
+		if (argc < 6)
+		{
+			ft_printf_fd(2, "pipex: format args \"here_doc LIMITER cmd1 cmd2 file2\"\n");
+			return (1);
+		}	
 		ft_printf_fd(2, "FOUND\n");
 		i = 3;
 	}
@@ -116,7 +122,7 @@ int	main(int argc, char *argv[], char *env[])
 		i = 2;
 	if (argc < 5)
 	{
-		ft_printf_fd(2, "pipex: format args \"file 1 cmd 1 cmd 2... file2\"\n");
+		ft_printf_fd(2, "pipex: format args \"file1 cmd1 cmd2... file2\"\n");
 		return (1);
 	}
 	ft_init(&pipex, argc, argv);
