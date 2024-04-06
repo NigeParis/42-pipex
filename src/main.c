@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/06 12:27:30 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/06 12:50:32 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,11 @@ int	main(int argc, char *argv[], char *env[])
 	int		i;
 
 	i = 2;
-	if (argc < 5)
+	if (argc != 5)
+	{
+		ft_printf_fd(2, "pipex: format args \"file 1 cmd 1 cmd 2 file2\"\n");
 		return (1);
+	}
 	ft_init(&pipex, argc, argv);
 	while (i <= argc - 2)
 	{
