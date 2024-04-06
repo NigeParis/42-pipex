@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/06 13:10:19 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/06 16:00:27 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,13 @@ int	main(int argc, char *argv[], char *env[])
 	t_pipex	pipex;
 	int		i;
 
-	i = 2;
+	if (ft_strcmp (argv[1], "here_doc") == 0)
+	{
+		ft_printf_fd(2, "FOUND\n");
+		i = 3;
+	}
+	else
+		i = 2;
 	if (argc < 5)
 	{
 		ft_printf_fd(2, "pipex: format args \"file 1 cmd 1 cmd 2... file2\"\n");
