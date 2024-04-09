@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/09 18:04:05 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/09 18:26:30 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ void	ft_open_files(t_pipex *pipex, int argc, char *argv[])
 	}
 }
 
-
-int		ft_pipex(t_pipex *pipex, int argc, char *argv[])
+int	ft_pipex(t_pipex *pipex, int argc, char *argv[])
 {
 	if (argc < 5)
 	{
@@ -68,12 +67,11 @@ int		ft_pipex(t_pipex *pipex, int argc, char *argv[])
 	return (0);
 }
 
-void	ft_pipes(t_pipex *pipex, char *argv[], char *env[], int i)
+void	cleanup_main_end(t_pipex *pipex)
 {
-	make_pipe(pipex, env, argv, i);
-	close(pipex->pipe_fd[0]);
-	close(pipex->pipe_fd[1]);
+	ft_heredoc_cleanup(pipex);
 	ft_cleanup(pipex, 8);
+	close_fd(pipex, 10);
 }
 
 int	main(int argc, char *argv[], char *env[])
@@ -84,13 +82,13 @@ int	main(int argc, char *argv[], char *env[])
 	if (ft_strcmp (argv[1], "here_doc") == 0)
 	{
 		i = 3;
-		if(ft_heredoc(&pipex, argc, argv))
+		if (ft_heredoc(&pipex, argc, argv))
 			return (1);
 	}
 	else
 	{
 		i = 2;
-		if(ft_pipex(&pipex, argc, argv))
+		if (ft_pipex(&pipex, argc, argv))
 			return (1);
 	}
 	while (i <= argc - 2)
@@ -98,9 +96,8 @@ int	main(int argc, char *argv[], char *env[])
 		ft_pipes(&pipex, argv, env, i);
 		i++;
 	}
-	while (wait(NULL) > 0) ;
-	ft_heredoc_cleanup(&pipex);
-	ft_cleanup(&pipex, 8);
-	close_fd(&pipex, 10);
+	while (wait(NULL) > 0)
+		;
+	cleanup_main_end(&pipex);
 	return (0);
 }

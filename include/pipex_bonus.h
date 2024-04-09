@@ -71,6 +71,6 @@ int		ft_heredoc(t_pipex *pipex, int argc, char *argv[]);
 void	ft_here_doc(t_pipex *pipex, char *argv[]);
 int		ft_pipex(t_pipex *pipex, int argc, char *argv[]);
 void	ft_pipes(t_pipex *pipex, char *argv[], char *env[], int i);
-
+void	cleanup_main_end(t_pipex *pipex);
 
 #endif

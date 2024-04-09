@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:31:23 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/09 17:37:31 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/09 18:17:51 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,31 +41,33 @@ void	ft_heredoc_init(t_pipex *pipex, int argc, char *argv[])
 	}
 }
 
-int		ft_heredoc(t_pipex *pipex, int argc, char *argv[])
+int	ft_heredoc(t_pipex *pipex, int argc, char *argv[])
 {
 	if (argc < 6)
 	{
-		ft_printf_fd(2, "pipex: format args \"here_doc LIMITER cmd1 cmd2 file2\"\n");
+		ft_printf_fd(2, "pipex: format args \
+			\"here_doc LIMITER cmd1 cmd2 file2\"\n");
 		return (1);
 	}	
 	ft_heredoc_init(pipex, argc, argv);
 	ft_here_doc(pipex, argv);
-	return (0);	
+	return (0);
 }
 
 void	ft_heredoc_cleanup(t_pipex *pipex)
 {
 	if (pipex->doc != 0)
- 	{
+	{
 		if (pipex->pipe_doc[0] != -1)
 			close(pipex->pipe_doc[0]);
-		close_fd(pipex, 1);	
+		close_fd(pipex, 1);
 	}
 }
 
 void	ft_here_doc(t_pipex *pipex, char *argv[])
 {
-	char *str;
+	char	*str;
+
 	str = NULL;
 	pipe(pipex->pipe_doc);
 	if (pipe < 0)
@@ -73,12 +75,12 @@ void	ft_here_doc(t_pipex *pipex, char *argv[])
 	while (1)
 	{
 		ft_printf("here_doc> ");
-		str = get_next_line(0);	
+		str = get_next_line(0);
 		if ((ft_strncmp(str, argv[2], ft_strlen(argv[2])) == 0))
 		{
 			if ((ft_strlen(str) - 1) == ft_strlen(argv[2]))
 			{
-				break;
+				break ;
 			}
 		}
 		ft_putstr_fd(str, pipex->pipe_doc[1]);
@@ -87,4 +89,3 @@ void	ft_here_doc(t_pipex *pipex, char *argv[])
 	ft_free_tab(str);
 	close(pipex->pipe_doc[1]);
 }
-

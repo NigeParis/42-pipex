@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 11:54:14 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/09 17:21:50 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/09 18:21:06 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ void	child_process(t_pipex *pipex, char *argv[], char *env[], int i)
 		dup2(pipex->fdin, STDIN_FILENO);
 	if (i == 3 && pipex->doc == 1)
 	{
-		dup2(pipex->pipe_doc[0], STDIN_FILENO);	
+		dup2(pipex->pipe_doc[0], STDIN_FILENO);
 	}
 	if (i == pipex->nb_argc - 2)
 	{
 		dup2(pipex->fdout, STDOUT_FILENO);
 		close_fd(pipex, 1);
-	}		
+	}	
 	else
 	{
 		dup2(pipex->pipe_fd[1], STDOUT_FILENO);
@@ -66,4 +66,12 @@ void	parent_process(t_pipex *pipex)
 	close(pipex->pipe_fd[1]);
 	dup2(pipex->pipe_fd[0], STDIN_FILENO);
 	close(pipex->pipe_fd[1]);
+}
+
+void	ft_pipes(t_pipex *pipex, char *argv[], char *env[], int i)
+{
+	make_pipe(pipex, env, argv, i);
+	close(pipex->pipe_fd[0]);
+	close(pipex->pipe_fd[1]);
+	ft_cleanup(pipex, 8);
 }
