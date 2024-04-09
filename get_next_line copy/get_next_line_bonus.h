@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 09:25:41 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/08 18:36:59 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/08 14:56:33 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdlib.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
+#  define BUFFER_SIZE 200
 # endif
 
 char	*get_next_line(int fd);

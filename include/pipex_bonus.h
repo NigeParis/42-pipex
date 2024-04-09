@@ -21,7 +21,7 @@
 # include <sys/types.h>
 # include "../libft/libft.h"
 # include "../ft_printf/src/ft_printf.h"
-# include "../get_next_line/get_next_line.h"
+# include "../get_next_line/get_next_line_bonus.h"
 
 typedef struct s_pipex
 {
@@ -42,6 +42,8 @@ typedef struct s_pipex
 	int		nb_argc;
 	int		parse_flag;
 	int		cmd_not_flag;
+	int		doc;
+	int		pipe_doc[2];
 
 }	t_pipex;
 
@@ -62,5 +64,6 @@ int		get_path_absolu(t_pipex *pipex, char *argv[], int i);
 int		make_pipe(t_pipex *pipex, char *env[], char *argv[], int i);
 void	child_process(t_pipex *pipex, char *argv[], char *env[], int i);
 void	parent_process(t_pipex *pipex);
+void	ft_heredoc_init(t_pipex *pipex, int argc, char *argv[]);
 
 #endif

@@ -33,7 +33,7 @@ BONUS_SRC+=./src_bonus/make_pipe.c
 
 LIBFT= ./libft/libft.a
 FT_PRINTF= ./ft_printf/libftprintf.a
-GET_NEXT_LINE= ./get_next_line/get_next_line.a
+GET_NEXT_LINE= ./get_next_line/get_next_line_bonus.a
 
 HEADER=pipex.h
 HEADER_BONUS=pipex_bonus.h

@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/06 12:50:32 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/08 09:08:38 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	ft_open_files(t_pipex *pipex, int argc, char *argv[])
 		perror(argv[1]);
 		exit (0);
 	}
+
 	if (access(argv[1], F_OK | R_OK) == 0)
 		pipex->fdin = open(argv[1], O_RDONLY, 0777);
 	pipex->fdout = open(argv[argc -1], O_WRONLY | O_CREAT | O_TRUNC, 0777);
@@ -51,6 +52,7 @@ void	ft_open_files(t_pipex *pipex, int argc, char *argv[])
 	{
 		close_fd(pipex, 0);
 		perror("outfile");
+		exit (0);
 	}
 }
 

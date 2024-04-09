@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 11:54:14 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/06 12:23:58 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:42:08 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,15 @@ void	child_process(t_pipex *pipex, char *argv[], char *env[], int i)
 {
 	close(pipex->pipe_fd[0]);
 	if (i == 2)
-		dup2(pipex->fdin, 0);
+		dup2(pipex->fdin, STDIN_FILENO);
 	if (i == pipex->nb_argc - 2)
 	{
-		dup2(pipex->fdout, 1);
+		dup2(pipex->fdout, STDOUT_FILENO);
 		close_fd(pipex, 1);
 	}		
 	else
 	{
-		dup2(pipex->pipe_fd[1], 1);
+		dup2(pipex->pipe_fd[1], STDOUT_FILENO);
 		close(pipex->pipe_fd[0]);
 	}
 	close_fd(pipex, 10);
@@ -57,6 +57,6 @@ void	child_process(t_pipex *pipex, char *argv[], char *env[], int i)
 void	parent_process(t_pipex *pipex)
 {
 	close(pipex->pipe_fd[1]);
-	dup2(pipex->pipe_fd[0], 0);
+	dup2(pipex->pipe_fd[0], STDIN_FILENO);
 	close(pipex->pipe_fd[1]);
 }

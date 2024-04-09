@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 09:29:01 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/08 19:02:15 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/27 08:20:57 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 char	*get_chars(int fd, char *buffer)
 {
@@ -47,12 +47,12 @@ char	*get_line_trim(char *buffer)
 		return (0);
 	while (buffer[len] && buffer[len] != '\n')
 		len++;
-	trimmed_read = (char *)malloc(ft_gnl_strlen(buffer) + 2 * sizeof(char));
+	trimmed_read = malloc(ft_gnl_strlen(buffer) + 2 * sizeof(char));
 	while (buffer[i] && buffer[i] != '\n')
 	{
 		trimmed_read[i] = buffer[i];
 		i++;
-	}	
+	}
 	if (buffer[i] == '\n')
 	{
 		trimmed_read[i] = buffer[i];
@@ -75,33 +75,32 @@ char	*get_leftover(char *buffer)
 		return (free(buffer), NULL);
 	if (buffer[i] == '\n')
 		i++;
-	if (!ft_gnl_strlen(&buffer[i]))
-		return (free(buffer), NULL);
-	new_buffer = malloc(((ft_gnl_strlen(&buffer[i])) + 1) * sizeof(char));
+	new_buffer = malloc((ft_gnl_strlen(buffer) + 1) * sizeof(char));
 	if (!new_buffer)
 		return (NULL);
 	j = 0;
 	while (buffer[i])
-	{		
+	{
 		new_buffer[j] = buffer[i];
 		i++;
 		j++;
 	}
 	new_buffer[j] = '\0';
-	return (free(buffer), new_buffer);
+	free(buffer);
+	return (new_buffer);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer[2048];
+	static char	*buffer;
 	char		*output;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
-	buffer[fd] = get_chars(fd, buffer[fd]);
-	if (!buffer[fd])
+	buffer = get_chars(fd, buffer);
+	if (!buffer)
 		return (0);
-	output = get_line_trim(buffer[fd]);
-	buffer[fd] = get_leftover(buffer[fd]);
+	output = get_line_trim(buffer);
+	buffer = get_leftover(buffer);
 	return (output);
 }

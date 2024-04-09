@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 09:29:01 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/03/27 08:20:57 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/08 19:03:06 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,20 @@ char	*get_leftover(char *buffer)
 		return (free(buffer), NULL);
 	if (buffer[i] == '\n')
 		i++;
-	new_buffer = malloc((ft_gnl_strlen(buffer) + 1) * sizeof(char));
+	if (!ft_gnl_strlen(&buffer[i]))
+		return (free(buffer), NULL);
+	new_buffer = malloc(((ft_gnl_strlen(&buffer[i])) + 1) * sizeof(char));
 	if (!new_buffer)
 		return (NULL);
 	j = 0;
 	while (buffer[i])
-	{
+	{		
 		new_buffer[j] = buffer[i];
 		i++;
 		j++;
 	}
 	new_buffer[j] = '\0';
-	free(buffer);
-	return (new_buffer);
+	return (free(buffer), new_buffer);
 }
 
 char	*get_next_line(int fd)

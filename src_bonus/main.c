@@ -6,11 +6,51 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/06 16:20:58 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/09 16:21:12 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex_bonus.h"
+
+void	ft_heredoc_init(t_pipex *pipex, int argc, char *argv[])
+{
+	pipex->path = 0;
+	pipex->paths = 0;
+	pipex->path_cmd = 0;
+	pipex->cmds = 0;
+	pipex->valid_cmd = 0;
+	pipex->all_cmd_valid = 0;
+	pipex->nbr_cmds = (argc - 3);
+	pipex->nb_argc = argc;
+	pipex->parse_flag = 0;
+	pipex->fdin = -1;
+	pipex->fdout = -1;
+	pipex->uni_path_flag = 0;
+	pipex->uni_cmd = 0;
+	pipex->uni_path = 0;
+	pipex->cmd_not_flag = 0;
+	pipex->doc = 1;
+	pipex->pipe_doc[0] = 0;
+	pipex->pipe_doc[1] = 0;
+
+
+	pipex->fdout = open(argv[argc -1], O_WRONLY | O_CREAT | O_APPEND, 0777);
+	if (pipex->fdout == -1)
+	{
+		close_fd(pipex, 0);
+		perror("outfile");
+		exit (0);
+	}
+	
+
+
+
+	
+}
+
+
+
+
 
 void	ft_init(t_pipex *pipex, int argc, char *argv[])
 {
@@ -29,6 +69,7 @@ void	ft_init(t_pipex *pipex, int argc, char *argv[])
 	pipex->uni_cmd = 0;
 	pipex->uni_path = 0;
 	pipex->cmd_not_flag = 0;
+	pipex->doc = 0;
 	ft_open_files(pipex, argc, argv);
 }
 
@@ -51,6 +92,7 @@ void	ft_open_files(t_pipex *pipex, int argc, char *argv[])
 	{
 		close_fd(pipex, 0);
 		perror("outfile");
+		exit (0);
 	}
 }
 
@@ -102,12 +144,48 @@ int	get_path_absolu(t_pipex *pipex, char *argv[], int i)
 	return (0);
 }
 
+
+
+void	ft_here_doc(t_pipex *pipex, char *argv[])
+{
+	char *str;
+	str = NULL;
+	pipe(pipex->pipe_doc);
+	while (1)
+	{
+		str = get_next_line(0);	
+		if ((ft_strncmp(str, argv[2], ft_strlen(argv[2])) == 0))
+		{
+			if ((ft_strlen(str) - 1) == ft_strlen(argv[2]))
+			{
+				break;
+			}
+		}
+		ft_putstr_fd(str, pipex->pipe_doc[1]);	
+		ft_free_tab(str);
+	}
+	ft_free_tab(str);
+	close(pipex->pipe_doc[1]);
+	//exit (0);
+}
+ 
+
+
+
+
+
+
 int	main(int argc, char *argv[], char *env[])
 {
 	t_pipex	pipex;
 	int		i;
 
-	unlink(argv[argc - 1]);
+	//int i;
+	
+	// (void)argc;
+	// (void)argv;
+	// (void)env;
+
 	if (ft_strcmp (argv[1], "here_doc") == 0)
 	{
 		if (argc < 6)
@@ -115,17 +193,23 @@ int	main(int argc, char *argv[], char *env[])
 			ft_printf_fd(2, "pipex: format args \"here_doc LIMITER cmd1 cmd2 file2\"\n");
 			return (1);
 		}	
-		ft_printf_fd(2, "FOUND\n");
+		ft_heredoc_init(&pipex, argc, argv);
+		ft_here_doc(&pipex, argv);
+
+	//	return (0);
+	
 		i = 3;
 	}
 	else
-		i = 2;
-	if (argc < 5)
 	{
-		ft_printf_fd(2, "pipex: format args \"file1 cmd1 cmd2... file2\"\n");
-		return (1);
+		i = 2;
+		if (argc < 5)
+		{
+			ft_printf_fd(2, "pipex: format args \"file1 cmd1 cmd2... file2\"\n");
+			return (1);
+		}
+		ft_init(&pipex, argc, argv);
 	}
-	ft_init(&pipex, argc, argv);
 	while (i <= argc - 2)
 	{
 		make_pipe(&pipex, env, argv, i);
@@ -136,6 +220,9 @@ int	main(int argc, char *argv[], char *env[])
 	}
 	while (wait(NULL) > 0)
 		;
+	if (pipex.pipe_doc[0] != 1)
+		close(pipex.pipe_doc[0]);
+	close(pipex.fdout);
 	ft_cleanup(&pipex, 8);
 	close_fd(&pipex, 10);
 	return (0);

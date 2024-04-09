@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 06:03:01 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/08 17:24:12 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/03/27 08:27:44 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_gnl_strlen(char *str)
 {
@@ -19,7 +19,7 @@ size_t	ft_gnl_strlen(char *str)
 	i = 0;
 	if (!str)
 		return (0);
-	while (str && str[i])
+	while (str[i])
 		i++;
 	return (i);
 }

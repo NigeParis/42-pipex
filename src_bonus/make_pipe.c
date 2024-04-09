@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 11:54:14 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/06 12:59:39 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/09 16:17:12 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,24 @@ int	make_pipe(t_pipex *pipex, char *env[], char *argv[], int i)
 void	child_process(t_pipex *pipex, char *argv[], char *env[], int i)
 {
 	close(pipex->pipe_fd[0]);
-	if (i == 2)
-		dup2(pipex->fdin, 0);
+	if (i == 2 && pipex->doc == 0)
+		dup2(pipex->fdin, STDIN_FILENO);
+	if (i == 3 && pipex->doc == 1)
+	{
+		dup2(pipex->pipe_doc[0], STDIN_FILENO);	
+	}
 	if (i == pipex->nb_argc - 2)
 	{
-		dup2(pipex->fdout, 1);
+		dup2(pipex->fdout, STDOUT_FILENO);
 		close_fd(pipex, 1);
 	}		
 	else
 	{
-		dup2(pipex->pipe_fd[1], 1);
+		dup2(pipex->pipe_fd[1], STDOUT_FILENO);
 		close(pipex->pipe_fd[0]);
 	}
+	close(pipex->pipe_doc[0]);
+	close(pipex->fdout);
 	close_fd(pipex, 10);
 	close(pipex->pipe_fd[1]);
 	get_path_absolu(pipex, argv, i);
@@ -57,6 +63,6 @@ void	child_process(t_pipex *pipex, char *argv[], char *env[], int i)
 void	parent_process(t_pipex *pipex)
 {
 	close(pipex->pipe_fd[1]);
-	dup2(pipex->pipe_fd[0], 0);
+	dup2(pipex->pipe_fd[0], STDIN_FILENO);
 	close(pipex->pipe_fd[1]);
 }

@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 06:03:01 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/08 17:24:12 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/08 14:24:36 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ size_t	ft_gnl_strlen(char *str)
 	i = 0;
 	if (!str)
 		return (0);
-	while (str && str[i])
+	while (str[i])
 		i++;
 	return (i);
 }

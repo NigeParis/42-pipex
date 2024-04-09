@@ -1,20 +1,14 @@
-
-total 56
-drwxr-xr-x 12 nrobinso 2023_paris  4096 Apr  6 12:15  .
-drwxr-xr-x 13 nrobinso 2023_paris   239 Apr  4 16:34  ..
-drwxr-xr-x  2 nrobinso 2023_paris    31 Apr  3 20:46  bintest
-drwxr-xr-x  3 nrobinso 2023_paris    54 Apr  6 12:14  ft_printf
-drwxr-xr-x  2 nrobinso 2023_paris  4096 Apr  6 12:14  get_next_line
-drwxr-xr-x  8 nrobinso 2023_paris   185 Apr  6 12:00  .git
-drwxr-xr-x  2 nrobinso 2023_paris    21 Apr  5 18:36  include
--rw-r--r--  1 nrobinso 2023_paris     0 Apr  6 12:15  infile
-drwxr-xr-x  2 nrobinso 2023_paris  4096 Apr  6 12:14  libft
--rw-r--r--  1 nrobinso 2023_paris  2286 Apr  6 11:56  Makefile
--rwxr-xr-x  1 nrobinso 2023_paris     0 Apr  6 12:03  outfile
--rwxr-xr-x  1 nrobinso 2023_paris 35352 Apr  6 12:14  pipex
--rw-r--r--  1 nrobinso 2023_paris  1152 Apr  3 20:46  README.md
-drwxr-xr-x  2 nrobinso 2023_paris   101 Apr  6 12:14  src
-drwxr-xr-x  2 nrobinso 2023_paris    82 Apr  5 18:36 'src copy'
-drwxr-xr-x  2 nrobinso 2023_paris     6 Apr  6 10:46  trace
-drwxr-xr-x  2 nrobinso 2023_paris    46 Apr  5 11:16  .vscode
-➜  42-pipex git:(master) ✗ 
+drwxr-xr-x 2 nrobinso 2023_paris   31 Apr  3 20:46  bintest
+drwxr-xr-x 3 nrobinso 2023_paris   54 Apr  9 13:34  ft_printf
+drwxr-xr-x 2 nrobinso 2023_paris 4.0K Apr  9 13:34  get_next_line
+drwxr-xr-x 2 nrobinso 2023_paris 4.0K Apr  8 15:23 'get_next_line copy'
+drwxr-xr-x 2 nrobinso 2023_paris   42 Apr  6 13:04  include
+-rw-r--r-- 1 nrobinso 2023_paris    9 Apr  9 11:56  infile
+drwxr-xr-x 2 nrobinso 2023_paris 4.0K Apr  9 13:34  libft
+-rw-r--r-- 1 nrobinso 2023_paris 2.3K Apr  8 18:21  Makefile
+-rwxr-xr-x 1 nrobinso 2023_paris    0 Apr  9 13:34  outfile
+-rwxr-xr-x 1 nrobinso 2023_paris  35K Apr  9 13:34  pipex
+-rw-r--r-- 1 nrobinso 2023_paris 1.2K Apr  3 20:46  README.md
+drwxr-xr-x 2 nrobinso 2023_paris  101 Apr  9 13:34  src
+drwxr-xr-x 2 nrobinso 2023_paris  101 Apr  9 12:54  src_bonus
+drwxr-xr-x 2 nrobinso 2023_paris    6 Apr  9 13:33  trace
