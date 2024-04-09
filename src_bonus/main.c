@@ -6,51 +6,11 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/09 16:21:12 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/09 18:04:05 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex_bonus.h"
-
-void	ft_heredoc_init(t_pipex *pipex, int argc, char *argv[])
-{
-	pipex->path = 0;
-	pipex->paths = 0;
-	pipex->path_cmd = 0;
-	pipex->cmds = 0;
-	pipex->valid_cmd = 0;
-	pipex->all_cmd_valid = 0;
-	pipex->nbr_cmds = (argc - 3);
-	pipex->nb_argc = argc;
-	pipex->parse_flag = 0;
-	pipex->fdin = -1;
-	pipex->fdout = -1;
-	pipex->uni_path_flag = 0;
-	pipex->uni_cmd = 0;
-	pipex->uni_path = 0;
-	pipex->cmd_not_flag = 0;
-	pipex->doc = 1;
-	pipex->pipe_doc[0] = 0;
-	pipex->pipe_doc[1] = 0;
-
-
-	pipex->fdout = open(argv[argc -1], O_WRONLY | O_CREAT | O_APPEND, 0777);
-	if (pipex->fdout == -1)
-	{
-		close_fd(pipex, 0);
-		perror("outfile");
-		exit (0);
-	}
-	
-
-
-
-	
-}
-
-
-
-
 
 void	ft_init(t_pipex *pipex, int argc, char *argv[])
 {
@@ -96,133 +56,50 @@ void	ft_open_files(t_pipex *pipex, int argc, char *argv[])
 	}
 }
 
-int	path_absolu_valid(t_pipex *pipex, char *argv[], int i)
+
+int		ft_pipex(t_pipex *pipex, int argc, char *argv[])
 {
-	if (access(pipex->uni_path[0], F_OK | R_OK) == 0)
+	if (argc < 5)
 	{
-		if ((get_cmd(pipex, argv[i])) == -1)
-		{
-			ft_putstr_fd("pipex: permission denied:", 1);
-			ft_cleanup(pipex, 5);
-			close_fd(pipex, 10);
-			exit(127);
-		}
-		pipex->valid_cmd = 0;
-		pipex->all_cmd_valid++;
-		ft_cleanup(pipex, 8);
-		pipex->path = ft_strdup(pipex->uni_path[0]);
-		pipex->cmds = pipex->uni_path;
+		ft_printf_fd(2, "pipex: format args \"file1 cmd1 cmd2... file2\"\n");
 		return (1);
-	}	
+	}
+	ft_init(pipex, argc, argv);
 	return (0);
 }
 
-int	get_path_absolu(t_pipex *pipex, char *argv[], int i)
+void	ft_pipes(t_pipex *pipex, char *argv[], char *env[], int i)
 {
-	int	j;
-
-	j = 0;
-	while (argv[i][j] != '\0' && argv[i][j] != ' ')
-	{
-		if (argv[i][j] == '/')
-			pipex->uni_path_flag = 1;
-		j++;
-	}
-	if (pipex->uni_path_flag)
-	{
-		if (pipex->uni_path)
-			ft_free_double_tab(pipex->uni_path);
-		pipex->uni_path = ft_split(argv[i], ' ');
-		if (path_absolu_valid(pipex, argv, i))
-			return (1);
-		pipex->uni_path_flag = 0;
-		pipex->valid_cmd = 1;
-		ft_cleanup(pipex, 8);
-		if (pipex->uni_path)
-			ft_free_double_tab(pipex->uni_path);
-	}
-	return (0);
+	make_pipe(pipex, env, argv, i);
+	close(pipex->pipe_fd[0]);
+	close(pipex->pipe_fd[1]);
+	ft_cleanup(pipex, 8);
 }
-
-
-
-void	ft_here_doc(t_pipex *pipex, char *argv[])
-{
-	char *str;
-	str = NULL;
-	pipe(pipex->pipe_doc);
-	while (1)
-	{
-		str = get_next_line(0);	
-		if ((ft_strncmp(str, argv[2], ft_strlen(argv[2])) == 0))
-		{
-			if ((ft_strlen(str) - 1) == ft_strlen(argv[2]))
-			{
-				break;
-			}
-		}
-		ft_putstr_fd(str, pipex->pipe_doc[1]);	
-		ft_free_tab(str);
-	}
-	ft_free_tab(str);
-	close(pipex->pipe_doc[1]);
-	//exit (0);
-}
- 
-
-
-
-
-
 
 int	main(int argc, char *argv[], char *env[])
 {
 	t_pipex	pipex;
 	int		i;
 
-	//int i;
-	
-	// (void)argc;
-	// (void)argv;
-	// (void)env;
-
 	if (ft_strcmp (argv[1], "here_doc") == 0)
 	{
-		if (argc < 6)
-		{
-			ft_printf_fd(2, "pipex: format args \"here_doc LIMITER cmd1 cmd2 file2\"\n");
-			return (1);
-		}	
-		ft_heredoc_init(&pipex, argc, argv);
-		ft_here_doc(&pipex, argv);
-
-	//	return (0);
-	
 		i = 3;
+		if(ft_heredoc(&pipex, argc, argv))
+			return (1);
 	}
 	else
 	{
 		i = 2;
-		if (argc < 5)
-		{
-			ft_printf_fd(2, "pipex: format args \"file1 cmd1 cmd2... file2\"\n");
+		if(ft_pipex(&pipex, argc, argv))
 			return (1);
-		}
-		ft_init(&pipex, argc, argv);
 	}
 	while (i <= argc - 2)
 	{
-		make_pipe(&pipex, env, argv, i);
-		close(pipex.pipe_fd[0]);
-		close(pipex.pipe_fd[1]);
-		ft_cleanup(&pipex, 8);
+		ft_pipes(&pipex, argv, env, i);
 		i++;
 	}
-	while (wait(NULL) > 0)
-		;
-	if (pipex.pipe_doc[0] != 1)
-		close(pipex.pipe_doc[0]);
-	close(pipex.fdout);
+	while (wait(NULL) > 0) ;
+	ft_heredoc_cleanup(&pipex);
 	ft_cleanup(&pipex, 8);
 	close_fd(&pipex, 10);
 	return (0);

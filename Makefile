@@ -29,7 +29,7 @@ SRC+=./src/make_pipe.c
 
 BONUS_SRC= ./src_bonus/main.c ./src_bonus/get_path.c 
 BONUS_SRC+=./src_bonus/clean_and_errors.c ./src_bonus/get_cmds.c
-BONUS_SRC+=./src_bonus/make_pipe.c
+BONUS_SRC+=./src_bonus/make_pipe.c ./src_bonus/get_heredoc.c
 
 LIBFT= ./libft/libft.a
 FT_PRINTF= ./ft_printf/libftprintf.a

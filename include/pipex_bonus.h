@@ -61,9 +61,16 @@ void	ft_cleanup_helper(t_pipex *pipex, int type);
 void	ft_init(t_pipex *pipex, int argc, char *argv[]);
 void	ft_open_files(t_pipex *pipex, int argc, char *argv[]);
 int		get_path_absolu(t_pipex *pipex, char *argv[], int i);
+int		path_absolu_valid(t_pipex *pipex, char *argv[], int i);
 int		make_pipe(t_pipex *pipex, char *env[], char *argv[], int i);
 void	child_process(t_pipex *pipex, char *argv[], char *env[], int i);
 void	parent_process(t_pipex *pipex);
 void	ft_heredoc_init(t_pipex *pipex, int argc, char *argv[]);
+void	ft_heredoc_cleanup(t_pipex *pipex);
+int		ft_heredoc(t_pipex *pipex, int argc, char *argv[]);
+void	ft_here_doc(t_pipex *pipex, char *argv[]);
+int		ft_pipex(t_pipex *pipex, int argc, char *argv[]);
+void	ft_pipes(t_pipex *pipex, char *argv[], char *env[], int i);
+
 
 #endif
