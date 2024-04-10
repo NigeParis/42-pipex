@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 11:54:14 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/09 13:42:08 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/10 08:20:14 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 int	make_pipe(t_pipex *pipex, char *env[], char *argv[], int i)
 {
 	pid_t	process;
+	int		ret;
 
-	pipe(pipex->pipe_fd);
-	if (pipe < 0)
+	ret = pipe(pipex->pipe_fd);
+	if (ret < 0)
 		perror("pipe");
 	process = fork();
 	if (process == -1)
@@ -42,7 +43,7 @@ void	child_process(t_pipex *pipex, char *argv[], char *env[], int i)
 	{
 		dup2(pipex->fdout, STDOUT_FILENO);
 		close_fd(pipex, 1);
-	}		
+	}
 	else
 	{
 		dup2(pipex->pipe_fd[1], STDOUT_FILENO);

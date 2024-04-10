@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:31:23 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/09 18:17:51 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/10 08:20:47 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	ft_heredoc(t_pipex *pipex, int argc, char *argv[])
 		ft_printf_fd(2, "pipex: format args \
 			\"here_doc LIMITER cmd1 cmd2 file2\"\n");
 		return (1);
-	}	
+	}
 	ft_heredoc_init(pipex, argc, argv);
 	ft_here_doc(pipex, argv);
 	return (0);
@@ -67,10 +67,11 @@ void	ft_heredoc_cleanup(t_pipex *pipex)
 void	ft_here_doc(t_pipex *pipex, char *argv[])
 {
 	char	*str;
+	int		ret;		
 
 	str = NULL;
-	pipe(pipex->pipe_doc);
-	if (pipe < 0)
+	ret = pipe(pipex->pipe_doc);
+	if (ret < 0)
 		perror("heredoc");
 	while (1)
 	{

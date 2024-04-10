@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:45:37 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/09 18:11:14 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/10 08:18:56 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	path_absolu_valid(t_pipex *pipex, char *argv[], int i)
 		pipex->path = ft_strdup(pipex->uni_path[0]);
 		pipex->cmds = pipex->uni_path;
 		return (1);
-	}	
+	}
 	return (0);
 }
 

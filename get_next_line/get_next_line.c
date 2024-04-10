@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 09:29:01 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/08 19:03:06 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/10 08:16:48 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	*get_leftover(char *buffer)
 		return (NULL);
 	j = 0;
 	while (buffer[i])
-	{		
+	{
 		new_buffer[j] = buffer[i];
 		i++;
 		j++;

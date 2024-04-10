@@ -6,7 +6,7 @@
 /*   By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 09:29:01 by nrobinso          #+#    #+#             */
-/*   Updated: 2024/04/08 19:02:15 by nrobinso         ###   ########.fr       */
+/*   Updated: 2024/04/10 08:22:03 by nrobinso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*get_line_trim(char *buffer)
 	{
 		trimmed_read[i] = buffer[i];
 		i++;
-	}	
+	}
 	if (buffer[i] == '\n')
 	{
 		trimmed_read[i] = buffer[i];
@@ -82,7 +82,7 @@ char	*get_leftover(char *buffer)
 		return (NULL);
 	j = 0;
 	while (buffer[i])
-	{		
+	{
 		new_buffer[j] = buffer[i];
 		i++;
 		j++;
